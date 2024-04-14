@@ -6,3 +6,5 @@ I will even add explained step by step projects I worked on
 Stay tuned
 
 BDG
+
+link = salahbdg.github.io
