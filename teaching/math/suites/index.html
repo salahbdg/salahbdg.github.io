@@ -1,853 +1,1096 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Les Suites - Cours Terminale</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #764ba2;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #667eea;
+      }
+
+      h3 {
+        color: #667eea;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .definition {
+        background: #f0f4ff;
+        padding: 20px;
+        border-left: 5px solid #667eea;
+        margin: 20px 0;
+        border-radius: 5px;
+      }
+
+      .formule {
+        background: #fff9e6;
+        padding: 15px;
+        border-left: 5px solid #ffa500;
+        margin: 15px 0;
+        border-radius: 5px;
+        font-family: "Courier New", monospace;
+      }
+
+      .exemple {
+        background: #e8f5e9;
+        padding: 20px;
+        border-left: 5px solid #4caf50;
+        margin: 20px 0;
+        border-radius: 5px;
+      }
+
+      .important {
+        background: #ffebee;
+        padding: 15px;
+        border-left: 5px solid #f44336;
+        margin: 15px 0;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      .tableau {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .tableau th,
+      .tableau td {
+        border: 2px solid #667eea;
+        padding: 12px;
+        text-align: center;
+      }
+
+      .tableau th {
+        background: #667eea;
+        color: white;
+      }
+
+      .tableau tr:nth-child(even) {
+        background: #f0f4ff;
+      }
+
+      code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "Courier New", monospace;
+      }
+
+      .method {
+        background: #fff3e0;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 5px;
+        border-left: 5px solid #ff9800;
+      }
+
+      .chart-container {
+        background: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      canvas {
+        max-height: 400px;
+      }
+
+      .interactive-section {
+        background: #f8f9fa;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+        border: 2px solid #667eea;
+      }
+
+      .controls {
+        display: flex;
+        gap: 15px;
+        margin: 15px 0;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .controls label {
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      .controls input {
+        padding: 8px;
+        border: 2px solid #667eea;
+        border-radius: 5px;
+        width: 100px;
+      }
+
+      .controls button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+
+      .controls button:hover {
+        background: #764ba2;
+      }
+
+      .visualization-box {
+        background: linear-gradient(135deg, #667eea15, #764ba215);
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+        border: 2px dashed #667eea;
+      }
+
+      .grid-visual {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .term-box {
+        background: #667eea;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        animation: fadeIn 0.5s;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
         }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            color: #333;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        h1 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        h2 {
-            color: #764ba2;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
-        }
-        
-        h3 {
-            color: #667eea;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .definition {
-            background: #f0f4ff;
-            padding: 20px;
-            border-left: 5px solid #667eea;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        
-        .formule {
-            background: #fff9e6;
-            padding: 15px;
-            border-left: 5px solid #ffa500;
-            margin: 15px 0;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .exemple {
-            background: #e8f5e9;
-            padding: 20px;
-            border-left: 5px solid #4caf50;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        
-        .important {
-            background: #ffebee;
-            padding: 15px;
-            border-left: 5px solid #f44336;
-            margin: 15px 0;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        
-        .tableau {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        .tableau th, .tableau td {
-            border: 2px solid #667eea;
-            padding: 12px;
-            text-align: center;
-        }
-        
-        .tableau th {
-            background: #667eea;
-            color: white;
-        }
-        
-        .tableau tr:nth-child(even) {
-            background: #f0f4ff;
-        }
-        
-        code {
-            background: #f5f5f5;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .method {
-            background: #fff3e0;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
-            border-left: 5px solid #ff9800;
-        }
-        
-        .chart-container {
-            background: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        canvas {
-            max-height: 400px;
-        }
-        
-        .interactive-section {
-            background: #f8f9fa;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border: 2px solid #667eea;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        .controls label {
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .controls input {
-            padding: 8px;
-            border: 2px solid #667eea;
-            border-radius: 5px;
-            width: 100px;
-        }
-        
-        .controls button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        
-        .controls button:hover {
-            background: #764ba2;
-        }
-        
-        .visualization-box {
-            background: linear-gradient(135deg, #667eea15, #764ba215);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border: 2px dashed #667eea;
-        }
-        
-        .grid-visual {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .term-box {
-            background: #667eea;
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+      }
+
+      .comparison-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      @media (max-width: 768px) {
         .comparison-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
+          grid-template-columns: 1fr;
         }
-        
-        @media (max-width: 768px) {
-            .comparison-container {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>📐 Les Suites - Cours de Terminale</h1>
-        
-        <h2>I. Généralités sur les suites</h2>
-        
-        <div class="definition">
-            <h3>Définition</h3>
-            <p>Une <strong>suite numérique</strong> est une fonction définie sur ℕ (ou une partie de ℕ) à valeurs dans ℝ.</p>
-            <p>On note : u : ℕ → ℝ, n ↦ u(n) = u<sub>n</sub></p>
-            <p><strong>u<sub>n</sub></strong> est appelé le <strong>terme général</strong> de la suite.</p>
+      <h1>📐 Les Suites - Cours de Terminale</h1>
+
+      <h2>I. Généralités sur les suites</h2>
+
+      <div class="definition">
+        <h3>Définition</h3>
+        <p>
+          Une <strong>suite numérique</strong> est une fonction définie sur ℕ
+          (ou une partie de ℕ) à valeurs dans ℝ.
+        </p>
+        <p>On note : u : ℕ → ℝ, n ↦ u(n) = u<sub>n</sub></p>
+        <p>
+          <strong>u<sub>n</sub></strong> est appelé le
+          <strong>terme général</strong> de la suite.
+        </p>
+      </div>
+
+      <div class="visualization-box">
+        <h3 style="color: #667eea">
+          📊 Visualisation : Une suite comme une liste de nombres
+        </h3>
+        <div class="grid-visual" id="suiteBasique">
+          <div class="term-box">u₀ = 2</div>
+          <div class="term-box">u₁ = 5</div>
+          <div class="term-box">u₂ = 8</div>
+          <div class="term-box">u₃ = 11</div>
+          <div class="term-box">u₄ = 14</div>
+          <div class="term-box">u₅ = 17</div>
         </div>
-        
-        <div class="visualization-box">
-            <h3 style="color: #667eea;">📊 Visualisation : Une suite comme une liste de nombres</h3>
-            <div class="grid-visual" id="suiteBasique">
-                <div class="term-box">u₀ = 2</div>
-                <div class="term-box">u₁ = 5</div>
-                <div class="term-box">u₂ = 8</div>
-                <div class="term-box">u₃ = 11</div>
-                <div class="term-box">u₄ = 14</div>
-                <div class="term-box">u₅ = 17</div>
-            </div>
-            <p style="text-align: center; color: #764ba2; font-weight: bold;">Chaque terme est indexé par n (0, 1, 2, 3...)</p>
+        <p style="text-align: center; color: #764ba2; font-weight: bold">
+          Chaque terme est indexé par n (0, 1, 2, 3...)
+        </p>
+      </div>
+
+      <h2>II. Suites arithmétiques</h2>
+
+      <div class="definition">
+        <h3>Définition</h3>
+        <p>
+          Une suite (u<sub>n</sub>) est <strong>arithmétique</strong> si et
+          seulement si il existe un réel <strong>r</strong> (raison) tel que :
+        </p>
+        <p style="text-align: center; font-size: 1.2em; margin: 10px 0">
+          <strong>u<sub>n+1</sub> = u<sub>n</sub> + r</strong>
+        </p>
+        <p style="text-align: center; color: #764ba2">
+          On ajoute toujours la même quantité !
+        </p>
+      </div>
+
+      <div class="interactive-section">
+        <h3>🎮 Suite arithmétique interactive</h3>
+        <div class="controls">
+          <label>u₀ :</label>
+          <input type="number" id="arith-u0" value="5" />
+          <label>Raison r :</label>
+          <input type="number" id="arith-r" value="3" />
+          <button onclick="updateArithmetic()">Mettre à jour</button>
         </div>
-        
-        <h2>II. Suites arithmétiques</h2>
-        
-        <div class="definition">
-            <h3>Définition</h3>
-            <p>Une suite (u<sub>n</sub>) est <strong>arithmétique</strong> si et seulement si il existe un réel <strong>r</strong> (raison) tel que :</p>
-            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;"><strong>u<sub>n+1</sub> = u<sub>n</sub> + r</strong></p>
-            <p style="text-align: center; color: #764ba2;">On ajoute toujours la même quantité !</p>
-        </div>
-        
-        <div class="interactive-section">
-            <h3>🎮 Suite arithmétique interactive</h3>
-            <div class="controls">
-                <label>u₀ :</label>
-                <input type="number" id="arith-u0" value="5">
-                <label>Raison r :</label>
-                <input type="number" id="arith-r" value="3">
-                <button onclick="updateArithmetic()">Mettre à jour</button>
-            </div>
-            <div class="chart-container">
-                <canvas id="arithmeticChart"></canvas>
-            </div>
-        </div>
-        
-        <div class="formule">
-            <h3>Formules essentielles</h3>
-            <p><strong>Terme général :</strong> u<sub>n</sub> = u<sub>0</sub> + n × r</p>
-            <p><strong>Ou bien :</strong> u<sub>n</sub> = u<sub>p</sub> + (n - p) × r</p>
-            <p><strong>Somme des termes :</strong> S<sub>n</sub> = (n + 1) × (u<sub>0</sub> + u<sub>n</sub>) / 2</p>
-        </div>
-        
-        <div class="visualization-box">
-            <h3 style="color: #667eea;">📈 Visualisation de la somme arithmétique</h3>
-            <p>Pour u₀=2, r=3 : Somme S₅ = u₀ + u₁ + u₂ + u₃ + u₄ + u₅</p>
-            <svg width="100%" height="200" style="max-width: 600px; display: block; margin: 20px auto;">
-                <rect x="10" y="150" width="80" height="40" fill="#667eea" stroke="#333" stroke-width="2"/>
-                <text x="50" y="175" fill="white" text-anchor="middle" font-weight="bold">2</text>
-                
-                <rect x="100" y="120" width="80" height="70" fill="#7c8ef5" stroke="#333" stroke-width="2"/>
-                <text x="140" y="160" fill="white" text-anchor="middle" font-weight="bold">5</text>
-                
-                <rect x="190" y="90" width="80" height="100" fill="#8f9ff5" stroke="#333" stroke-width="2"/>
-                <text x="230" y="145" fill="white" text-anchor="middle" font-weight="bold">8</text>
-                
-                <rect x="280" y="60" width="80" height="130" fill="#a2aff5" stroke="#333" stroke-width="2"/>
-                <text x="320" y="130" fill="white" text-anchor="middle" font-weight="bold">11</text>
-                
-                <rect x="370" y="30" width="80" height="160" fill="#b5bff5" stroke="#333" stroke-width="2"/>
-                <text x="410" y="115" fill="white" text-anchor="middle" font-weight="bold">14</text>
-                
-                <rect x="460" y="0" width="80" height="190" fill="#c8cff5" stroke="#333" stroke-width="2"/>
-                <text x="500" y="100" fill="white" text-anchor="middle" font-weight="bold">17</text>
-            </svg>
-            <p style="text-align: center; color: #764ba2; font-weight: bold;">Les barres forment un escalier régulier !</p>
-        </div>
-        
-        <h2>III. Suites géométriques</h2>
-        
-        <div class="definition">
-            <h3>Définition</h3>
-            <p>Une suite (u<sub>n</sub>) est <strong>géométrique</strong> si et seulement si il existe un réel <strong>q</strong> non nul (raison) tel que :</p>
-            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;"><strong>u<sub>n+1</sub> = u<sub>n</sub> × q</strong></p>
-            <p style="text-align: center; color: #764ba2;">On multiplie toujours par le même nombre !</p>
-        </div>
-        
-        <div class="interactive-section">
-            <h3>🎮 Suite géométrique interactive</h3>
-            <div class="controls">
-                <label>u₀ :</label>
-                <input type="number" id="geom-u0" value="2">
-                <label>Raison q :</label>
-                <input type="number" id="geom-q" value="1.5" step="0.1">
-                <button onclick="updateGeometric()">Mettre à jour</button>
-            </div>
-            <div class="chart-container">
-                <canvas id="geometricChart"></canvas>
-            </div>
-        </div>
-        
-        <div class="formule">
-            <h3>Formules essentielles</h3>
-            <p><strong>Terme général :</strong> u<sub>n</sub> = u<sub>0</sub> × q<sup>n</sup></p>
-            <p><strong>Ou bien :</strong> u<sub>n</sub> = u<sub>p</sub> × q<sup>n-p</sup></p>
-            <p><strong>Somme des termes (si q ≠ 1) :</strong> S<sub>n</sub> = u<sub>0</sub> × (1 - q<sup>n+1</sup>) / (1 - q)</p>
-        </div>
-        
-        <div class="comparison-container">
-            <div class="chart-container">
-                <h3 style="text-align: center; color: #667eea;">Suite avec q > 1 (croissance)</h3>
-                <canvas id="geomCroissante"></canvas>
-            </div>
-            <div class="chart-container">
-                <h3 style="text-align: center; color: #667eea;">Suite avec 0 < q < 1 (décroissance)</h3>
-                <canvas id="geomDecroissante"></canvas>
-            </div>
-        </div>
-        
-        <h2>IV. Comparaison Arithmétique vs Géométrique</h2>
-        
         <div class="chart-container">
-            <h3 style="text-align: center; color: #764ba2;">📊 Croissance linéaire vs exponentielle</h3>
-            <canvas id="comparisonChart"></canvas>
-            <p style="text-align: center; margin-top: 15px; color: #666;">
-                <strong>Observation :</strong> La suite géométrique (croissance exponentielle) dépasse rapidement la suite arithmétique (croissance linéaire) !
-            </p>
+          <canvas id="arithmeticChart"></canvas>
         </div>
-        
-        <h2>V. Convergence et limites</h2>
-        
-        <div class="interactive-section">
-            <h3>🎯 Visualisation de la convergence</h3>
-            <div class="controls">
-                <label>Raison q :</label>
-                <input type="number" id="conv-q" value="0.5" step="0.1" min="-2" max="2">
-                <button onclick="updateConvergence()">Mettre à jour</button>
-            </div>
-            <div class="chart-container">
-                <canvas id="convergenceChart"></canvas>
-            </div>
-            <div id="convergenceInfo" style="text-align: center; padding: 15px; background: #f0f4ff; border-radius: 5px; margin-top: 15px; font-weight: bold; color: #667eea;">
-            </div>
+      </div>
+
+      <div class="formule">
+        <h3>Formules essentielles</h3>
+        <p>
+          <strong>Terme général :</strong> u<sub>n</sub> = u<sub>0</sub> + n × r
+        </p>
+        <p>
+          <strong>Ou bien :</strong> u<sub>n</sub> = u<sub>p</sub> + (n - p) × r
+        </p>
+        <p>
+          <strong>Somme des termes :</strong> S<sub>n</sub> = (n + 1) × (u<sub
+            >0</sub
+          >
+          + u<sub>n</sub>) / 2
+        </p>
+      </div>
+
+      <div class="visualization-box">
+        <h3 style="color: #667eea">
+          📈 Visualisation de la somme arithmétique
+        </h3>
+        <p>Pour u₀=2, r=3 : Somme S₅ = u₀ + u₁ + u₂ + u₃ + u₄ + u₅</p>
+        <svg
+          width="100%"
+          height="200"
+          style="max-width: 600px; display: block; margin: 20px auto"
+        >
+          <rect
+            x="10"
+            y="150"
+            width="80"
+            height="40"
+            fill="#667eea"
+            stroke="#333"
+            stroke-width="2"
+          />
+          <text
+            x="50"
+            y="175"
+            fill="white"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            2
+          </text>
+
+          <rect
+            x="100"
+            y="120"
+            width="80"
+            height="70"
+            fill="#7c8ef5"
+            stroke="#333"
+            stroke-width="2"
+          />
+          <text
+            x="140"
+            y="160"
+            fill="white"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            5
+          </text>
+
+          <rect
+            x="190"
+            y="90"
+            width="80"
+            height="100"
+            fill="#8f9ff5"
+            stroke="#333"
+            stroke-width="2"
+          />
+          <text
+            x="230"
+            y="145"
+            fill="white"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            8
+          </text>
+
+          <rect
+            x="280"
+            y="60"
+            width="80"
+            height="130"
+            fill="#a2aff5"
+            stroke="#333"
+            stroke-width="2"
+          />
+          <text
+            x="320"
+            y="130"
+            fill="white"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            11
+          </text>
+
+          <rect
+            x="370"
+            y="30"
+            width="80"
+            height="160"
+            fill="#b5bff5"
+            stroke="#333"
+            stroke-width="2"
+          />
+          <text
+            x="410"
+            y="115"
+            fill="white"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            14
+          </text>
+
+          <rect
+            x="460"
+            y="0"
+            width="80"
+            height="190"
+            fill="#c8cff5"
+            stroke="#333"
+            stroke-width="2"
+          />
+          <text
+            x="500"
+            y="100"
+            fill="white"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            17
+          </text>
+        </svg>
+        <p style="text-align: center; color: #764ba2; font-weight: bold">
+          Les barres forment un escalier régulier !
+        </p>
+      </div>
+
+      <h2>III. Suites géométriques</h2>
+
+      <div class="definition">
+        <h3>Définition</h3>
+        <p>
+          Une suite (u<sub>n</sub>) est <strong>géométrique</strong> si et
+          seulement si il existe un réel <strong>q</strong> non nul (raison) tel
+          que :
+        </p>
+        <p style="text-align: center; font-size: 1.2em; margin: 10px 0">
+          <strong>u<sub>n+1</sub> = u<sub>n</sub> × q</strong>
+        </p>
+        <p style="text-align: center; color: #764ba2">
+          On multiplie toujours par le même nombre !
+        </p>
+      </div>
+
+      <div class="interactive-section">
+        <h3>🎮 Suite géométrique interactive</h3>
+        <div class="controls">
+          <label>u₀ :</label>
+          <input type="number" id="geom-u0" value="2" />
+          <label>Raison q :</label>
+          <input type="number" id="geom-q" value="1.5" step="0.1" />
+          <button onclick="updateGeometric()">Mettre à jour</button>
         </div>
-        
-        <div class="important">
-            <h3>Limites à connaître</h3>
-            <table class="tableau">
-                <tr>
-                    <th>Suite</th>
-                    <th>Condition</th>
-                    <th>Limite</th>
-                </tr>
-                <tr>
-                    <td>q<sup>n</sup></td>
-                    <td>-1 < q < 1</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>q<sup>n</sup></td>
-                    <td>q > 1</td>
-                    <td>+∞</td>
-                </tr>
-                <tr>
-                    <td>q<sup>n</sup></td>
-                    <td>q = 1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>q<sup>n</sup></td>
-                    <td>q ≤ -1</td>
-                    <td>pas de limite</td>
-                </tr>
-                <tr>
-                    <td>1/n</td>
-                    <td>-</td>
-                    <td>0</td>
-                </tr>
-            </table>
+        <div class="chart-container">
+          <canvas id="geometricChart"></canvas>
         </div>
-        
-        <h2>VI. Suites récurrentes</h2>
-        
-        <div class="interactive-section">
-            <h3>🔄 Suite récurrente : u<sub>n+1</sub> = f(u<sub>n</sub>)</h3>
-            <p>Exemple : u<sub>n+1</sub> = 0.5 × u<sub>n</sub> + 1</p>
-            <div class="controls">
-                <label>u₀ :</label>
-                <input type="number" id="rec-u0" value="5">
-                <button onclick="updateRecurrente()">Mettre à jour</button>
-            </div>
-            <div class="chart-container">
-                <canvas id="recurrenteChart"></canvas>
-            </div>
+      </div>
+
+      <div class="formule">
+        <h3>Formules essentielles</h3>
+        <p>
+          <strong>Terme général :</strong> u<sub>n</sub> = u<sub>0</sub> × q<sup
+            >n</sup
+          >
+        </p>
+        <p>
+          <strong>Ou bien :</strong> u<sub>n</sub> = u<sub>p</sub> × q<sup
+            >n-p</sup
+          >
+        </p>
+        <p>
+          <strong>Somme des termes (si q ≠ 1) :</strong> S<sub>n</sub> = u<sub
+            >0</sub
+          >
+          × (1 - q<sup>n+1</sup>) / (1 - q)
+        </p>
+      </div>
+
+      <div class="comparison-container">
+        <div class="chart-container">
+          <h3 style="text-align: center; color: #667eea">
+            Suite avec q > 1 (croissance)
+          </h3>
+          <canvas id="geomCroissante"></canvas>
         </div>
-        
-        <h2>VII. Raisonnement par récurrence</h2>
-        
-        <div class="method">
-            <h3>Principe du raisonnement par récurrence</h3>
-            <p>Pour démontrer qu'une propriété P(n) est vraie pour tout entier n ≥ n<sub>0</sub> :</p>
-            <p><strong>Étape 1 - Initialisation :</strong> Vérifier que P(n<sub>0</sub>) est vraie</p>
-            <p><strong>Étape 2 - Hérédité :</strong> Supposer P(n) vraie pour un certain n ≥ n<sub>0</sub> (hypothèse de récurrence)</p>
-            <p style="margin-left: 20px;">Démontrer que P(n+1) est vraie</p>
-            <p><strong>Étape 3 - Conclusion :</strong> Conclure que P(n) est vraie pour tout n ≥ n<sub>0</sub></p>
+        <div class="chart-container">
+          <h3 style="text-align: center; color: #667eea">
+            Suite avec 0 < q < 1 (décroissance)
+          </h3>
+          <canvas id="geomDecroissante"></canvas>
         </div>
-        
-        <div class="visualization-box">
-            <h3 style="color: #667eea;">🎯 Analogie : Les dominos</h3>
-            <svg width="100%" height="150" style="max-width: 500px; display: block; margin: 20px auto;">
-                <g transform="translate(50, 30)">
-                    <rect x="0" y="0" width="40" height="80" fill="#667eea" stroke="#333" stroke-width="2" rx="5"/>
-                    <circle cx="20" cy="40" r="5" fill="white"/>
-                    <text x="20" y="105" text-anchor="middle" font-size="12">n₀</text>
-                </g>
-                <g transform="translate(110, 30)">
-                    <rect x="0" y="0" width="40" height="80" fill="#7c8ef5" stroke="#333" stroke-width="2" rx="5" transform="rotate(15 20 80)"/>
-                    <circle cx="15" cy="40" r="5" fill="white"/>
-                    <text x="20" y="105" text-anchor="middle" font-size="12">n</text>
-                </g>
-                <g transform="translate(170, 30)">
-                    <rect x="0" y="0" width="40" height="80" fill="#8f9ff5" stroke="#333" stroke-width="2" rx="5" transform="rotate(30 20 80)"/>
-                    <circle cx="10" cy="40" r="5" fill="white"/>
-                    <text x="20" y="105" text-anchor="middle" font-size="12">n+1</text>
-                </g>
-                <g transform="translate(230, 30)">
-                    <rect x="0" y="0" width="40" height="80" fill="#a2aff5" stroke="#333" stroke-width="2" rx="5" transform="rotate(45 20 80)"/>
-                    <circle cx="5" cy="40" r="5" fill="white"/>
-                    <text x="20" y="105" text-anchor="middle" font-size="12">n+2</text>
-                </g>
-                <text x="300" y="70" font-size="24">...</text>
-            </svg>
-            <p style="text-align: center; color: #764ba2; font-weight: bold;">
-                Si le premier domino tombe (initialisation) et que chaque domino fait tomber le suivant (hérédité),<br>
-                alors tous les dominos tombent !
-            </p>
+      </div>
+
+      <h2>IV. Comparaison Arithmétique vs Géométrique</h2>
+
+      <div class="chart-container">
+        <h3 style="text-align: center; color: #764ba2">
+          📊 Croissance linéaire vs exponentielle
+        </h3>
+        <canvas id="comparisonChart"></canvas>
+        <p style="text-align: center; margin-top: 15px; color: #666">
+          <strong>Observation :</strong> La suite géométrique (croissance
+          exponentielle) dépasse rapidement la suite arithmétique (croissance
+          linéaire) !
+        </p>
+      </div>
+
+      <h2>V. Convergence et limites</h2>
+
+      <div class="interactive-section">
+        <h3>🎯 Visualisation de la convergence</h3>
+        <div class="controls">
+          <label>Raison q :</label>
+          <input
+            type="number"
+            id="conv-q"
+            value="0.5"
+            step="0.1"
+            min="-2"
+            max="2"
+          />
+          <button onclick="updateConvergence()">Mettre à jour</button>
         </div>
-        
-        <div class="important">
-            <h3>⚠️ Points clés à retenir</h3>
-            <p>✓ Suite arithmétique : addition constante, croissance linéaire</p>
-            <p>✓ Suite géométrique : multiplication constante, croissance exponentielle</p>
-            <p>✓ Une suite géométrique avec q > 1 dépasse toujours une suite arithmétique</p>
-            <p>✓ Pour q entre -1 et 1 : la suite géométrique converge vers 0</p>
-            <p>✓ Le raisonnement par récurrence fonctionne comme des dominos</p>
+        <div class="chart-container">
+          <canvas id="convergenceChart"></canvas>
         </div>
+        <div
+          id="convergenceInfo"
+          style="
+            text-align: center;
+            padding: 15px;
+            background: #f0f4ff;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #667eea;
+          "
+        ></div>
+      </div>
+
+      <div class="important">
+        <h3>Limites à connaître</h3>
+        <table class="tableau">
+          <tr>
+            <th>Suite</th>
+            <th>Condition</th>
+            <th>Limite</th>
+          </tr>
+          <tr>
+            <td>q<sup>n</sup></td>
+            <td>-1 < q < 1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>q<sup>n</sup></td>
+            <td>q > 1</td>
+            <td>+∞</td>
+          </tr>
+          <tr>
+            <td>q<sup>n</sup></td>
+            <td>q = 1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>q<sup>n</sup></td>
+            <td>q ≤ -1</td>
+            <td>pas de limite</td>
+          </tr>
+          <tr>
+            <td>1/n</td>
+            <td>-</td>
+            <td>0</td>
+          </tr>
+        </table>
+      </div>
+
+      <h2>VI. Suites récurrentes</h2>
+
+      <div class="interactive-section">
+        <h3>🔄 Suite récurrente : u<sub>n+1</sub> = f(u<sub>n</sub>)</h3>
+        <p>Exemple : u<sub>n+1</sub> = 0.5 × u<sub>n</sub> + 1</p>
+        <div class="controls">
+          <label>u₀ :</label>
+          <input type="number" id="rec-u0" value="5" />
+          <button onclick="updateRecurrente()">Mettre à jour</button>
+        </div>
+        <div class="chart-container">
+          <canvas id="recurrenteChart"></canvas>
+        </div>
+      </div>
+
+      <h2>VII. Raisonnement par récurrence</h2>
+
+      <div class="method">
+        <h3>Principe du raisonnement par récurrence</h3>
+        <p>
+          Pour démontrer qu'une propriété P(n) est vraie pour tout entier n ≥
+          n<sub>0</sub> :
+        </p>
+        <p>
+          <strong>Étape 1 - Initialisation :</strong> Vérifier que
+          P(n<sub>0</sub>) est vraie
+        </p>
+        <p>
+          <strong>Étape 2 - Hérédité :</strong> Supposer P(n) vraie pour un
+          certain n ≥ n<sub>0</sub> (hypothèse de récurrence)
+        </p>
+        <p style="margin-left: 20px">Démontrer que P(n+1) est vraie</p>
+        <p>
+          <strong>Étape 3 - Conclusion :</strong> Conclure que P(n) est vraie
+          pour tout n ≥ n<sub>0</sub>
+        </p>
+      </div>
+
+      <div class="visualization-box">
+        <h3 style="color: #667eea">🎯 Analogie : Les dominos</h3>
+        <svg
+          width="100%"
+          height="150"
+          style="max-width: 500px; display: block; margin: 20px auto"
+        >
+          <g transform="translate(50, 30)">
+            <rect
+              x="0"
+              y="0"
+              width="40"
+              height="80"
+              fill="#667eea"
+              stroke="#333"
+              stroke-width="2"
+              rx="5"
+            />
+            <circle cx="20" cy="40" r="5" fill="white" />
+            <text x="20" y="105" text-anchor="middle" font-size="12">n₀</text>
+          </g>
+          <g transform="translate(110, 30)">
+            <rect
+              x="0"
+              y="0"
+              width="40"
+              height="80"
+              fill="#7c8ef5"
+              stroke="#333"
+              stroke-width="2"
+              rx="5"
+              transform="rotate(15 20 80)"
+            />
+            <circle cx="15" cy="40" r="5" fill="white" />
+            <text x="20" y="105" text-anchor="middle" font-size="12">n</text>
+          </g>
+          <g transform="translate(170, 30)">
+            <rect
+              x="0"
+              y="0"
+              width="40"
+              height="80"
+              fill="#8f9ff5"
+              stroke="#333"
+              stroke-width="2"
+              rx="5"
+              transform="rotate(30 20 80)"
+            />
+            <circle cx="10" cy="40" r="5" fill="white" />
+            <text x="20" y="105" text-anchor="middle" font-size="12">n+1</text>
+          </g>
+          <g transform="translate(230, 30)">
+            <rect
+              x="0"
+              y="0"
+              width="40"
+              height="80"
+              fill="#a2aff5"
+              stroke="#333"
+              stroke-width="2"
+              rx="5"
+              transform="rotate(45 20 80)"
+            />
+            <circle cx="5" cy="40" r="5" fill="white" />
+            <text x="20" y="105" text-anchor="middle" font-size="12">n+2</text>
+          </g>
+          <text x="300" y="70" font-size="24">...</text>
+        </svg>
+        <p style="text-align: center; color: #764ba2; font-weight: bold">
+          Si le premier domino tombe (initialisation) et que chaque domino fait
+          tomber le suivant (hérédité),<br />
+          alors tous les dominos tombent !
+        </p>
+      </div>
+
+      <div class="important">
+        <h3>⚠️ Points clés à retenir</h3>
+        <p>✓ Suite arithmétique : addition constante, croissance linéaire</p>
+        <p>
+          ✓ Suite géométrique : multiplication constante, croissance
+          exponentielle
+        </p>
+        <p>
+          ✓ Une suite géométrique avec q > 1 dépasse toujours une suite
+          arithmétique
+        </p>
+        <p>✓ Pour q entre -1 et 1 : la suite géométrique converge vers 0</p>
+        <p>✓ Le raisonnement par récurrence fonctionne comme des dominos</p>
+      </div>
     </div>
-    
+
     <script>
-        // Configuration globale pour tous les graphiques
-        Chart.defaults.font.size = 12;
-        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-        
-        // Suite arithmétique interactive
-        let arithmeticChart;
-        function updateArithmetic() {
-            const u0 = parseFloat(document.getElementById('arith-u0').value);
-            const r = parseFloat(document.getElementById('arith-r').value);
-            
-            const data = [];
-            const labels = [];
-            for (let n = 0; n <= 10; n++) {
-                labels.push('u' + n);
-                data.push(u0 + n * r);
-            }
-            
-            if (arithmeticChart) arithmeticChart.destroy();
-            
-            const ctx = document.getElementById('arithmeticChart').getContext('2d');
-            arithmeticChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Suite arithmétique (u₀=' + u0 + ', r=' + r + ')',
-                        data: data,
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        tension: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        }
-                    }
-                }
-            });
+      // Configuration globale pour tous les graphiques
+      Chart.defaults.font.size = 12;
+      Chart.defaults.font.family =
+        "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+
+      // Suite arithmétique interactive
+      let arithmeticChart;
+      function updateArithmetic() {
+        const u0 = parseFloat(document.getElementById("arith-u0").value);
+        const r = parseFloat(document.getElementById("arith-r").value);
+
+        const data = [];
+        const labels = [];
+        for (let n = 0; n <= 10; n++) {
+          labels.push("u" + n);
+          data.push(u0 + n * r);
         }
-        
-        // Graphique de convergence
-        let convergenceChart;
-        function updateConvergence() {
-            const q = parseFloat(document.getElementById('conv-q').value);
-            
-            const data = [];
-            const labels = [];
-            for (let n = 0; n <= 20; n++) {
-                labels.push(n);
-                data.push(Math.pow(q, n));
-            }
-            
-            if (convergenceChart) convergenceChart.destroy();
-            
-            const ctx = document.getElementById('convergenceChart').getContext('2d');
-            convergenceChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'qⁿ avec q=' + q,
-                        data: data,
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        tension: 0.1,
-                        fill: true
-                    }]
+
+        if (arithmeticChart) arithmeticChart.destroy();
+
+        const ctx = document.getElementById("arithmeticChart").getContext("2d");
+        arithmeticChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Suite arithmétique (u₀=" + u0 + ", r=" + r + ")",
+                data: data,
+                borderColor: "#667eea",
+                backgroundColor: "rgba(102, 126, 234, 0.1)",
+                borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                tension: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                grid: {
+                  color: "rgba(0, 0, 0, 0.1)",
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'n'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Afficher l'information sur la convergence
-            const infoDiv = document.getElementById('convergenceInfo');
-            if (q > 1) {
-                infoDiv.innerHTML = '📈 q > 1 : La suite diverge vers +∞';
-                infoDiv.style.background = '#ffebee';
-                infoDiv.style.borderLeft = '5px solid #f44336';
-            } else if (q === 1) {
-                infoDiv.innerHTML = '➡️ q = 1 : La suite est constante (limite = 1)';
-                infoDiv.style.background = '#fff9e6';
-                infoDiv.style.borderLeft = '5px solid #ffa500';
-            } else if (q > 0 && q < 1) {
-                infoDiv.innerHTML = '📉 0 < q < 1 : La suite converge vers 0';
-                infoDiv.style.background = '#e8f5e9';
-                infoDiv.style.borderLeft = '5px solid #4caf50';
-            } else if (q > -1 && q < 0) {
-                infoDiv.innerHTML = '🔄 -1 < q < 0 : La suite converge vers 0 en oscillant';
-                infoDiv.style.background = '#e1f5fe';
-                infoDiv.style.borderLeft = '5px solid #03a9f4';
-            } else if (q === -1) {
-                infoDiv.innerHTML = '↔️ q = -1 : La suite oscille entre -1 et 1 (pas de limite)';
-                infoDiv.style.background = '#f3e5f5';
-                infoDiv.style.borderLeft = '5px solid #9c27b0';
-            } else {
-                infoDiv.innerHTML = '⚠️ q ≤ -1 : La suite diverge en oscillant (pas de limite)';
-                infoDiv.style.background = '#ffebee';
-                infoDiv.style.borderLeft = '5px solid #f44336';
-            }
-        }
-        
-        // Suite récurrente
-        let recurrenteChart;
-        function updateRecurrente() {
-            const u0 = parseFloat(document.getElementById('rec-u0').value);
-            
-            const data = [u0];
-            const labels = ['u₀'];
-            
-            for (let n = 0; n < 15; n++) {
-                const nextTerm = 0.5 * data[data.length - 1] + 1;
-                data.push(nextTerm);
-                labels.push('u' + (n + 1));
-            }
-            
-            if (recurrenteChart) recurrenteChart.destroy();
-            
-            const ctx = document.getElementById('recurrenteChart').getContext('2d');
-            recurrenteChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'uₙ₊₁ = 0.5×uₙ + 1 (u₀=' + u0 + ')',
-                        data: data,
-                        borderColor: '#ff9800',
-                        backgroundColor: 'rgba(255, 152, 0, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        tension: 0.3,
-                        fill: true
-                    }, {
-                        label: 'Point fixe (y=2)',
-                        data: Array(data.length).fill(2),
-                        borderColor: '#f44336',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        tension: 0
-                    }]
+              },
+              x: {
+                grid: {
+                  color: "rgba(0, 0, 0, 0.05)",
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        }
-                    }
-                }
-            });
+              },
+            },
+          },
+        });
+      }
+
+      // Suite géométrique interactive
+      let geometricChart;
+      function updateGeometric() {
+        const u0 = parseFloat(document.getElementById("geom-u0").value);
+        const q = parseFloat(document.getElementById("geom-q").value);
+
+        const data = [];
+        const labels = [];
+        for (let n = 0; n <= 10; n++) {
+          labels.push("u" + n);
+          data.push(u0 * Math.pow(q, n));
         }
-        
-        // Initialisation au chargement de la page
-        window.onload = function() {
-            updateArithmetic();
-            updateGeometric();
-            initGeomCharts();
-            initComparisonChart();
-            updateConvergence();
-            updateRecurrente();
-        };
+
+        if (geometricChart) geometricChart.destroy();
+
+        const ctx = document.getElementById("geometricChart").getContext("2d");
+        geometricChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Suite géométrique (u₀=" + u0 + ", q=" + q + ")",
+                data: data,
+                borderColor: "#764ba2",
+                backgroundColor: "rgba(118, 75, 162, 0.1)",
+                borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                grid: {
+                  color: "rgba(0, 0, 0, 0.1)",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // Graphiques de comparaison géométrique
+      function initGeomCharts() {
+        // Croissante
+        const ctx1 = document.getElementById("geomCroissante").getContext("2d");
+        const dataCroissante = [];
+        for (let n = 0; n <= 8; n++) {
+          dataCroissante.push(2 * Math.pow(1.5, n));
+        }
+
+        new Chart(ctx1, {
+          type: "bar",
+          data: {
+            labels: ["u₀", "u₁", "u₂", "u₃", "u₄", "u₅", "u₆", "u₇", "u₈"],
+            datasets: [
+              {
+                label: "u₀=2, q=1.5",
+                data: dataCroissante,
+                backgroundColor: "#667eea",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: { y: { beginAtZero: true } },
+          },
+        });
+
+        // Décroissante
+        const ctx2 = document
+          .getElementById("geomDecroissante")
+          .getContext("2d");
+        const dataDecroissante = [];
+        for (let n = 0; n <= 10; n++) {
+          dataDecroissante.push(100 * Math.pow(0.7, n));
+        }
+
+        new Chart(ctx2, {
+          type: "bar",
+          data: {
+            labels: [
+              "u₀",
+              "u₁",
+              "u₂",
+              "u₃",
+              "u₄",
+              "u₅",
+              "u₆",
+              "u₇",
+              "u₈",
+              "u₉",
+              "u₁₀",
+            ],
+            datasets: [
+              {
+                label: "u₀=100, q=0.7",
+                data: dataDecroissante,
+                backgroundColor: "#764ba2",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: { y: { beginAtZero: true } },
+          },
+        });
+      }
+
+      // Graphique de comparaison
+      function initComparisonChart() {
+        const ctx = document.getElementById("comparisonChart").getContext("2d");
+
+        const dataArith = [];
+        const dataGeom = [];
+        const labels = [];
+
+        for (let n = 0; n <= 10; n++) {
+          labels.push("n=" + n);
+          dataArith.push(2 + 3 * n); // u₀=2, r=3
+          dataGeom.push(2 * Math.pow(1.5, n)); // u₀=2, q=1.5
+        }
+
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Arithmétique (u₀=2, r=3)",
+                data: dataArith,
+                borderColor: "#667eea",
+                backgroundColor: "rgba(102, 126, 234, 0.1)",
+                borderWidth: 3,
+                pointRadius: 5,
+                tension: 0,
+              },
+              {
+                label: "Géométrique (u₀=2, q=1.5)",
+                data: dataGeom,
+                borderColor: "#f44336",
+                backgroundColor: "rgba(244, 67, 54, 0.1)",
+                borderWidth: 3,
+                pointRadius: 5,
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: "rgba(0, 0, 0, 0.1)",
+                },
+              },
+              x: {
+                grid: {
+                  color: "rgba(0, 0, 0, 0.05)",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // Convergence graphique
+      let convergenceChart;
+      function updateConvergence() {
+        const q = parseFloat(document.getElementById("conv-q").value);
+        const u0 = 2;
+        const data = [];
+        const labels = [];
+        for (let n = 0; n <= 15; n++) {
+          labels.push("n=" + n);
+          data.push(u0 * Math.pow(q, n));
+        }
+        if (convergenceChart) convergenceChart.destroy();
+        const ctx = document
+          .getElementById("convergenceChart")
+          .getContext("2d");
+        convergenceChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "u₀=2, q=" + q,
+                data: data,
+                borderColor: "#764ba2",
+                backgroundColor: "rgba(118, 75, 162, 0.1)",
+                borderWidth: 3,
+                pointRadius: 5,
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                grid: {
+                  color: "rgba(0, 0, 0, 0.1)",
+                },
+              },
+            },
+          },
+        });
+        // Affichage info convergence
+        let info = "";
+        if (Math.abs(q) < 1) {
+          info = "La suite converge vers 0.";
+        } else if (q === 1) {
+          info = "La suite reste constante à 2.";
+        } else if (q > 1) {
+          info = "La suite diverge vers +∞.";
+        } else if (q <= -1) {
+          info = "La suite n'a pas de limite (oscille ou diverge).";
+        }
+        document.getElementById("convergenceInfo").textContent = info;
+      }
+
+      // Suite récurrente
+      let recurrenteChart;
+      function updateRecurrente() {
+        const u0 = parseFloat(document.getElementById("rec-u0").value);
+        const data = [u0];
+        const labels = ["n=0"];
+        for (let n = 1; n <= 15; n++) {
+          data.push(0.5 * data[n - 1] + 1);
+          labels.push("n=" + n);
+        }
+        if (recurrenteChart) recurrenteChart.destroy();
+        const ctx = document.getElementById("recurrenteChart").getContext("2d");
+        recurrenteChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "u₀=" + u0 + ", uₙ₊₁=0.5×uₙ+1",
+                data: data,
+                borderColor: "#4caf50",
+                backgroundColor: "rgba(76, 175, 80, 0.1)",
+                borderWidth: 3,
+                pointRadius: 5,
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                grid: {
+                  color: "rgba(0, 0, 0, 0.1)",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // Initialisation au chargement
+      window.onload = function () {
+        updateArithmetic();
+        updateGeometric();
+        initGeomCharts();
+        initComparisonChart();
+        updateConvergence();
+        updateRecurrente();
+      };
     </script>
-</body>
+  </body>
 </html>
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Suite géométrique interactive
-        let geometricChart;
-        function updateGeometric() {
-            const u0 = parseFloat(document.getElementById('geom-u0').value);
-            const q = parseFloat(document.getElementById('geom-q').value);
-            
-            const data = [];
-            const labels = [];
-            for (let n = 0; n <= 10; n++) {
-                labels.push('u' + n);
-                data.push(u0 * Math.pow(q, n));
-            }
-            
-            if (geometricChart) geometricChart.destroy();
-            
-            const ctx = document.getElementById('geometricChart').getContext('2d');
-            geometricChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Suite géométrique (u₀=' + u0 + ', q=' + q + ')',
-                        data: data,
-                        borderColor: '#764ba2',
-                        backgroundColor: 'rgba(118, 75, 162, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Graphiques de comparaison géométrique
-        function initGeomCharts() {
-            // Croissante
-            const ctx1 = document.getElementById('geomCroissante').getContext('2d');
-            const dataCroissante = [];
-            for (let n = 0; n <= 8; n++) {
-                dataCroissante.push(2 * Math.pow(1.5, n));
-            }
-            
-            new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: ['u₀', 'u₁', 'u₂', 'u₃', 'u₄', 'u₅', 'u₆', 'u₇', 'u₈'],
-                    datasets: [{
-                        label: 'u₀=2, q=1.5',
-                        data: dataCroissante,
-                        backgroundColor: '#667eea'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: true } },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-            
-            // Décroissante
-            const ctx2 = document.getElementById('geomDecroissante').getContext('2d');
-            const dataDecroissante = [];
-            for (let n = 0; n <= 10; n++) {
-                dataDecroissante.push(100 * Math.pow(0.7, n));
-            }
-            
-            new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: ['u₀', 'u₁', 'u₂', 'u₃', 'u₄', 'u₅', 'u₆', 'u₇', 'u₈', 'u₉', 'u₁₀'],
-                    datasets: [{
-                        label: 'u₀=100, q=0.7',
-                        data: dataDecroissante,
-                        backgroundColor: '#764ba2'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: true } },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-        }
-        
-        // Graphique de comparaison
-        function initComparisonChart() {
-            const ctx = document.getElementById('comparisonChart').getContext('2d');
-            
-            const dataArith = [];
-            const dataGeom = [];
-            const labels = [];
-            
-            for (let n = 0; n <= 10; n++) {
-                labels.push('n=' + n);
-                dataArith.push(2 + 3 * n); // u₀=2, r=3
-                dataGeom.push(2 * Math.pow(1.5, n)); // u₀=2, q=1.5
-            }
-            
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Arithmétique (u₀=2, r=3)',
-                        data: dataArith,
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 5,
-                        tension: 0
-                    }, {
-                        label: 'Géométrique (u₀=2, q=1.5)',
-                        data: dataGeom,
-                        borderColor: '#f44336',
-                        backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                        borderWidth: 3,
-                        pointRadius: 5,
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true,
