@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Programme de Mathématiques - Terminale</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Montserrat", Arial, sans-serif;
+        background: #f7fafc;
+        margin: 0;
+        color: #222;
+        line-height: 1.6;
+      }
+
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        padding: 2.5rem 1rem 2rem 1rem;
+        text-align: center;
+        border-radius: 0 0 24px 24px;
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+      }
+
+      header h1 {
+        margin: 0 0 0.5rem 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      header p {
+        margin: 0;
+        font-size: 1.2rem;
+        opacity: 0.95;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .nav-menu {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .nav-item {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: #333;
+      }
+
+      .nav-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+      }
+
+      .nav-item .emoji {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .nav-item h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .nav-item p {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+
+      main {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .section {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .section:target {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+        transform: scale(1.01);
+      }
+
+      .section-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        padding: 1.5rem 2rem;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .section-header h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .section-header .toggle {
+        position: absolute;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+      }
+
+      .section-content {
+        padding: 2rem;
+        display: none;
+      }
+
+      .section.active .section-content {
+        display: block;
+      }
+
+      .section.active .toggle {
+        transform: translateY(-50%) rotate(180deg);
+      }
+
+      .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .topic-card {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 1.5rem;
+        border-left: 4px solid #667eea;
+      }
+
+      .topic-card h4 {
+        margin: 0 0 1rem 0;
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      .topic-card ul {
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+
+      .topic-card li {
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+      }
+
+      .must-know {
+        background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+        color: #fff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-top: 1.5rem;
+      }
+
+      .must-know h4 {
+        margin: 0 0 1rem 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .must-know ul {
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+
+      .must-know li {
+        margin-bottom: 0.4rem;
+        font-size: 0.95rem;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #667eea;
+        color: #fff;
+        padding: 0.8rem;
+        border-radius: 50%;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .back-to-top:hover {
+        background: #5a67d8;
+        transform: translateY(-2px);
+      }
+
+      .anchor {
+        display: inline-block;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        color: #667eea;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2rem;
+        }
+
+        .nav-menu {
+          grid-template-columns: 1fr;
+          padding: 0 0.5rem;
+        }
+
+        main {
+          padding: 0 0.5rem;
+        }
+
+        .section-header {
+          padding: 1.2rem 1.5rem;
+        }
+
+        .section-content {
+          padding: 1.5rem;
+        }
+
+        .topic-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>📚 Programme de Mathématiques - Terminale</h1>
+      <p>
+        Guide complet du programme officiel avec les notions essentielles à
+        maîtriser pour réussir votre année de Terminale
+      </p>
+    </header>
+
+    <div class="nav-menu">
+      <a href="#analyse" class="nav-item">
+        <span class="emoji">📈</span>
+        <h3>Analyse</h3>
+        <p>Limites, continuité, dérivation, intégration</p>
+      </a>
+      <a href="#geometrie" class="nav-item">
+        <span class="emoji">📐</span>
+        <h3>Géométrie</h3>
+        <p>Produit scalaire, géométrie dans l'espace</p>
+      </a>
+      <a href="#probabilites" class="nav-item">
+        <span class="emoji">🎲</span>
+        <h3>Probabilités</h3>
+        <p>Variables aléatoires, lois de probabilité</p>
+      </a>
+      <a href="#suites" class="nav-item">
+        <span class="emoji">🔢</span>
+        <h3>Suites</h3>
+        <p>Suites arithmétiques, géométriques, limites</p>
+      </a>
+      <a href="#fonctions" class="nav-item">
+        <span class="emoji">📊</span>
+        <h3>Fonctions</h3>
+        <p>Exponentielle, logarithme, trigonométrie</p>
+      </a>
+    </div>
+
+    <main>
+      <section id="analyse" class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>📈 Analyse</h2>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="topic-grid">
+            <div class="topic-card">
+              <h4>Limites et Continuité</h4>
+              <ul>
+                <li>Limite d'une fonction en un point</li>
+                <li>Limite à l'infini</li>
+                <li>Formes indéterminées</li>
+                <li>Continuité et théorème des valeurs intermédiaires</li>
+                <li>Asymptotes (verticales, horizontales, obliques)</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Dérivation</h4>
+              <ul>
+                <li>Nombre dérivé et fonction dérivée</li>
+                <li>Dérivées des fonctions usuelles</li>
+                <li>
+                  Règles de dérivation (somme, produit, quotient, composée)
+                </li>
+                <li>Équation de la tangente</li>
+                <li>Étude des variations d'une fonction</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Intégration</h4>
+              <ul>
+                <li>Primitive d'une fonction</li>
+                <li>Intégrale définie et calcul d'aires</li>
+                <li>Propriétés de l'intégrale</li>
+                <li>Intégration par parties (spé maths)</li>
+                <li>Équations différentielles simples</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Fonctions Convexes</h4>
+              <ul>
+                <li>Définition de la convexité</li>
+                <li>Lien avec la dérivée seconde</li>
+                <li>Points d'inflexion</li>
+                <li>Inégalité de convexité</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="must-know">
+            <h4>🎯 Points essentiels à retenir :</h4>
+            <ul>
+              <li>
+                <strong>Maîtriser le calcul de limites</strong> : connaître les
+                règles, savoir lever les indéterminations
+              </li>
+              <li>
+                <strong>Dérivation</strong> : formules de base + règles (uv)' =
+                u'v + uv', (u/v)' = (u'v - uv')/v²
+              </li>
+              <li>
+                <strong>Étude de fonction complète</strong> : domaine, limites,
+                dérivée, variations, représentation graphique
+              </li>
+              <li>
+                <strong>Calcul d'aires</strong> : intégrale comme limite de
+                sommes de Riemann
+              </li>
+              <li>
+                <strong>Primitives usuelles</strong> : x^n, e^x, 1/x, sin(x),
+                cos(x)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="geometrie" class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>📐 Géométrie</h2>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="topic-grid">
+            <div class="topic-card">
+              <h4>Produit Scalaire</h4>
+              <ul>
+                <li>Définition et propriétés</li>
+                <li>Expression analytique dans un repère orthonormé</li>
+                <li>Applications : calcul d'angles, de longueurs</li>
+                <li>Orthogonalité de deux vecteurs</li>
+                <li>Projection orthogonale</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Géométrie dans l'Espace</h4>
+              <ul>
+                <li>Repérage dans l'espace (coordonnées)</li>
+                <li>Vecteurs de l'espace</li>
+                <li>Équations de plans et de droites</li>
+                <li>Distances et orthogonalité</li>
+                <li>Sections de solides par des plans</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Transformations</h4>
+              <ul>
+                <li>Translation, rotation, symétrie</li>
+                <li>Homothétie et similitude</li>
+                <li>Composition de transformations</li>
+                <li>Applications en géométrie complexe (spé)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="must-know">
+            <h4>🎯 Points essentiels à retenir :</h4>
+            <ul>
+              <li>
+                <strong>Produit scalaire</strong> : u⃗·v⃗ = ||u⃗|| × ||v⃗|| ×
+                cos(θ) = x₁x₂ + y₁y₂ + z₁z₂
+              </li>
+              <li><strong>Orthogonalité</strong> : u⃗ ⊥ v⃗ ⟺ u⃗·v⃗ = 0</li>
+              <li>
+                <strong>Distance</strong> : AB = √[(xB-xA)² + (yB-yA)² +
+                (zB-zA)²]
+              </li>
+              <li><strong>Équation de plan</strong> : ax + by + cz + d = 0</li>
+              <li>
+                <strong>Coplanarité</strong> : trois vecteurs sont coplanaires
+                si leur produit mixte est nul
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="probabilites" class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>🎲 Probabilités et Statistiques</h2>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="topic-grid">
+            <div class="topic-card">
+              <h4>Variables Aléatoires</h4>
+              <ul>
+                <li>Définition d'une variable aléatoire</li>
+                <li>Loi de probabilité d'une variable discrète</li>
+                <li>Espérance, variance, écart-type</li>
+                <li>Variables aléatoires continues</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Lois de Probabilité</h4>
+              <ul>
+                <li>Loi de Bernoulli</li>
+                <li>Loi binomiale B(n,p)</li>
+                <li>Loi normale N(μ,σ²)</li>
+                <li>Loi uniforme</li>
+                <li>Approximation normale de la loi binomiale</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Échantillonnage</h4>
+              <ul>
+                <li>Fluctuation d'échantillonnage</li>
+                <li>Intervalle de fluctuation</li>
+                <li>Estimation par intervalle de confiance</li>
+                <li>Tests d'hypothèses</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Probabilités Conditionnelles</h4>
+              <ul>
+                <li>Définition de P(A|B)</li>
+                <li>Formule des probabilités totales</li>
+                <li>Formule de Bayes</li>
+                <li>Indépendance d'événements</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="must-know">
+            <h4>🎯 Points essentiels à retenir :</h4>
+            <ul>
+              <li>
+                <strong>Loi binomiale</strong> : X ~ B(n,p), P(X=k) = C(n,k) ×
+                p^k × (1-p)^(n-k)
+              </li>
+              <li>
+                <strong>Espérance/Variance</strong> : E(X) = np, V(X) = np(1-p)
+                pour une binomiale
+              </li>
+              <li>
+                <strong>Loi normale centrée réduite</strong> : utilisation de la
+                table ou calculatrice
+              </li>
+              <li>
+                <strong>Intervalle de fluctuation à 95%</strong> : [p -
+                1,96√(p(1-p)/n) ; p + 1,96√(p(1-p)/n)]
+              </li>
+              <li>
+                <strong>Théorème central limite</strong> : approximation normale
+                pour n grand
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="suites" class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>🔢 Suites Numériques</h2>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <a href="salahbdg.github.io/suites" class="anchor">
+            <h3>🤖 Voir le résumé</h3>
+          </a>
+          <div class="topic-grid">
+            <div class="topic-card">
+              <h4>Suites Arithmétiques et Géométriques</h4>
+              <ul>
+                <li>Définition et propriétés</li>
+                <li>Terme général : uₙ = u₀ + nr (arithmétique)</li>
+                <li>Terme général : uₙ = u₀ × qⁿ (géométrique)</li>
+                <li>Sommes des premiers termes</li>
+                <li>Applications économiques</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Limites de Suites</h4>
+              <ul>
+                <li>Limite finie ou infinie</li>
+                <li>Théorèmes de comparaison</li>
+                <li>Suites majorées, minorées, bornées</li>
+                <li>Convergence et divergence</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Récurrence et Raisonnement</h4>
+              <ul>
+                <li>Principe de récurrence</li>
+                <li>Suites définies par récurrence</li>
+                <li>Étude du comportement asymptotique</li>
+                <li>Suites adjacentes</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="must-know">
+            <h4>🎯 Points essentiels à retenir :</h4>
+            <ul>
+              <li>
+                <strong>Suite arithmétique</strong> : uₙ₊₁ - uₙ = r (constante),
+                Sₙ = (n+1)(u₀ + uₙ)/2
+              </li>
+              <li>
+                <strong>Suite géométrique</strong> : uₙ₊₁/uₙ = q (constante), Sₙ
+                = u₀(1-qⁿ⁺¹)/(1-q) si q≠1
+              </li>
+              <li>
+                <strong>Convergence géométrique</strong> : si |q| < 1 alors
+                lim(qⁿ) = 0
+              </li>
+              <li>
+                <strong>Théorème des gendarmes</strong> : si uₙ ≤ vₙ ≤ wₙ et
+                lim(uₙ) = lim(wₙ) = L, alors lim(vₙ) = L
+              </li>
+              <li>
+                <strong>Récurrence</strong> : initialisation + hérédité =
+                propriété vraie pour tout n
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="fonctions" class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>📊 Fonctions Spéciales</h2>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="topic-grid">
+            <div class="topic-card">
+              <h4>Fonction Exponentielle</h4>
+              <ul>
+                <li>Définition comme primitive de x ↦ e^x</li>
+                <li>Propriétés : e^(a+b) = e^a × e^b</li>
+                <li>Dérivée et primitives</li>
+                <li>Équations et inéquations</li>
+                <li>Croissances comparées</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Fonction Logarithme</h4>
+              <ul>
+                <li>Définition comme réciproque de exp</li>
+                <li>Propriétés : ln(ab) = ln(a) + ln(b)</li>
+                <li>Dérivée et primitives</li>
+                <li>Étude de la fonction ln</li>
+                <li>Équations et inéquations</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Fonctions Trigonométriques</h4>
+              <ul>
+                <li>Cercle trigonométrique</li>
+                <li>Fonctions sin, cos, tan</li>
+                <li>Dérivées des fonctions trigonométriques</li>
+                <li>Équations trigonométriques</li>
+                <li>Formules d'addition et de duplication</li>
+              </ul>
+            </div>
+            <div class="topic-card">
+              <h4>Fonctions Puissances</h4>
+              <ul>
+                <li>Fonctions x ↦ x^α (α réel)</li>
+                <li>Dérivation et intégration</li>
+                <li>Croissances comparées</li>
+                <li>Applications aux équations différentielles</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="must-know">
+            <h4>🎯 Points essentiels à retenir :</h4>
+            <ul>
+              <li>
+                <strong>Exponentielle</strong> : (e^x)' = e^x, e^0 = 1,
+                lim(e^x/x^n) = +∞ (x→+∞)
+              </li>
+              <li>
+                <strong>Logarithme</strong> : (ln x)' = 1/x, ln(1) = 0, lim(ln
+                x/x^α) = 0 (x→+∞, α>0)
+              </li>
+              <li>
+                <strong>Primitives usuelles</strong> : ∫e^x dx = e^x + C, ∫(1/x)
+                dx = ln|x| + C
+              </li>
+              <li>
+                <strong>Trigonométrie</strong> : (sin x)' = cos x, (cos x)' =
+                -sin x, sin²x + cos²x = 1
+              </li>
+              <li>
+                <strong>Équations</strong> : résolution systématique par
+                substitution ou factorisation
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+      function toggleSection(header) {
+        const section = header.parentElement;
+        const allSections = document.querySelectorAll(".section");
+
+        // Fermer toutes les autres sections
+        allSections.forEach((s) => {
+          if (s !== section) {
+            s.classList.remove("active");
+          }
+        });
+
+        // Toggle la section courante
+        section.classList.toggle("active");
+
+        // Scroll vers la section si elle s'ouvre
+        if (section.classList.contains("active")) {
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 100);
+        }
+      }
+
+      // Navigation douce vers les sections
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            // Ouvrir la section cible
+            targetSection.classList.add("active");
+
+            // Fermer les autres sections
+            document.querySelectorAll(".section").forEach((s) => {
+              if (s !== targetSection) {
+                s.classList.remove("active");
+              }
+            });
+
+            // Scroll vers la section
+            setTimeout(() => {
+              targetSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }, 100);
+          }
+        });
+      });
+
+      // Bouton retour en haut
+      const backToTop = document.getElementById("backToTop");
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add("visible");
+        } else {
+          backToTop.classList.remove("visible");
+        }
+      });
+
+      backToTop.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Ouvrir automatiquement une section si l'URL contient un hash
+      window.addEventListener("load", () => {
+        if (window.location.hash) {
+          const targetSection = document.querySelector(window.location.hash);
+          if (targetSection) {
+            targetSection.classList.add("active");
+            setTimeout(() => {
+              targetSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }, 100);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

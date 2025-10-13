@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Suites - Cours Terminale</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .definition {
+            background: #f0f4ff;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .formule {
+            background: #fff9e6;
+            padding: 15px;
+            border-left: 5px solid #ffa500;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .exemple {
+            background: #e8f5e9;
+            padding: 20px;
+            border-left: 5px solid #4caf50;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .important {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 5px solid #f44336;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .tableau {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .tableau th, .tableau td {
+            border: 2px solid #667eea;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .tableau th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tableau tr:nth-child(even) {
+            background: #f0f4ff;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .method {
+            background: #fff3e0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 5px solid #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 Les Suites - Cours de Terminale</h1>
+        
+        <h2>I. Généralités sur les suites</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>Une <strong>suite numérique</strong> est une fonction définie sur ℕ (ou une partie de ℕ) à valeurs dans ℝ.</p>
+            <p>On note : u : ℕ → ℝ, n ↦ u(n) = u<sub>n</sub></p>
+            <p><strong>u<sub>n</sub></strong> est appelé le <strong>terme général</strong> de la suite.</p>
+        </div>
+        
+        <h3>Modes de définition d'une suite</h3>
+        
+        <div class="formule">
+            <strong>1. Forme explicite :</strong> u<sub>n</sub> = f(n)<br>
+            Exemple : u<sub>n</sub> = 3n + 2
+        </div>
+        
+        <div class="formule">
+            <strong>2. Forme récurrente :</strong> u<sub>n+1</sub> = f(u<sub>n</sub>) avec u<sub>0</sub> donné<br>
+            Exemple : u<sub>n+1</sub> = 2u<sub>n</sub> + 1 et u<sub>0</sub> = 3
+        </div>
+        
+        <h2>II. Suites arithmétiques</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>Une suite (u<sub>n</sub>) est <strong>arithmétique</strong> si et seulement si il existe un réel <strong>r</strong> (raison) tel que :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;"><strong>u<sub>n+1</sub> = u<sub>n</sub> + r</strong></p>
+        </div>
+        
+        <div class="formule">
+            <h3>Formules essentielles</h3>
+            <p><strong>Terme général :</strong> u<sub>n</sub> = u<sub>0</sub> + n × r</p>
+            <p><strong>Ou bien :</strong> u<sub>n</sub> = u<sub>p</sub> + (n - p) × r</p>
+            <p><strong>Somme des termes :</strong> S<sub>n</sub> = u<sub>0</sub> + u<sub>1</sub> + ... + u<sub>n</sub> = (nombre de termes) × (premier terme + dernier terme) / 2</p>
+            <p style="text-align: center; margin: 10px 0;"><strong>S<sub>n</sub> = (n + 1) × (u<sub>0</sub> + u<sub>n</sub>) / 2</strong></p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple classique</h3>
+            <p><strong>Énoncé :</strong> Soit (u<sub>n</sub>) la suite arithmétique définie par u<sub>0</sub> = 5 et r = 3.</p>
+            <p><strong>1.</strong> Calculer u<sub>10</sub></p>
+            <p><strong>Solution :</strong> u<sub>10</sub> = u<sub>0</sub> + 10 × r = 5 + 10 × 3 = 5 + 30 = <strong>35</strong></p>
+            <p><strong>2.</strong> Calculer S = u<sub>0</sub> + u<sub>1</sub> + ... + u<sub>10</sub></p>
+            <p><strong>Solution :</strong> S = 11 × (u<sub>0</sub> + u<sub>10</sub>) / 2 = 11 × (5 + 35) / 2 = 11 × 20 = <strong>220</strong></p>
+        </div>
+        
+        <h2>III. Suites géométriques</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>Une suite (u<sub>n</sub>) est <strong>géométrique</strong> si et seulement si il existe un réel <strong>q</strong> non nul (raison) tel que :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;"><strong>u<sub>n+1</sub> = u<sub>n</sub> × q</strong></p>
+        </div>
+        
+        <div class="formule">
+            <h3>Formules essentielles</h3>
+            <p><strong>Terme général :</strong> u<sub>n</sub> = u<sub>0</sub> × q<sup>n</sup></p>
+            <p><strong>Ou bien :</strong> u<sub>n</sub> = u<sub>p</sub> × q<sup>n-p</sup></p>
+            <p><strong>Somme des termes (si q ≠ 1) :</strong></p>
+            <p style="text-align: center; margin: 10px 0;"><strong>S<sub>n</sub> = u<sub>0</sub> × (1 - q<sup>n+1</sup>) / (1 - q)</strong></p>
+            <p><strong>Si q = 1 :</strong> S<sub>n</sub> = (n + 1) × u<sub>0</sub></p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple classique</h3>
+            <p><strong>Énoncé :</strong> Soit (u<sub>n</sub>) la suite géométrique définie par u<sub>0</sub> = 2 et q = 3.</p>
+            <p><strong>1.</strong> Calculer u<sub>5</sub></p>
+            <p><strong>Solution :</strong> u<sub>5</sub> = u<sub>0</sub> × q<sup>5</sup> = 2 × 3<sup>5</sup> = 2 × 243 = <strong>486</strong></p>
+            <p><strong>2.</strong> Calculer S = u<sub>0</sub> + u<sub>1</sub> + ... + u<sub>5</sub></p>
+            <p><strong>Solution :</strong> S = 2 × (1 - 3<sup>6</sup>) / (1 - 3) = 2 × (1 - 729) / (-2) = 2 × (-728) / (-2) = <strong>728</strong></p>
+        </div>
+        
+        <h2>IV. Sens de variation</h2>
+        
+        <div class="method">
+            <h3>Méthodes pour étudier le sens de variation</h3>
+            <p><strong>Méthode 1 :</strong> Étudier le signe de u<sub>n+1</sub> - u<sub>n</sub></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Si u<sub>n+1</sub> - u<sub>n</sub> > 0, la suite est croissante</li>
+                <li>Si u<sub>n+1</sub> - u<sub>n</sub> < 0, la suite est décroissante</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>Méthode 2 :</strong> Si u<sub>n</sub> > 0, étudier le signe de u<sub>n+1</sub> / u<sub>n</sub></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Si u<sub>n+1</sub> / u<sub>n</sub> > 1, la suite est croissante</li>
+                <li>Si u<sub>n+1</sub> / u<sub>n</sub> < 1, la suite est décroissante</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>Méthode 3 :</strong> Si u<sub>n</sub> = f(n), étudier les variations de f</p>
+        </div>
+        
+        <h2>V. Convergence et limites</h2>
+        
+        <div class="definition">
+            <h3>Limite finie</h3>
+            <p>Une suite (u<sub>n</sub>) a pour limite <strong>ℓ</strong> si u<sub>n</sub> se rapproche autant que l'on veut de ℓ quand n tend vers +∞.</p>
+            <p>On note : lim (u<sub>n</sub>) = ℓ quand n → +∞</p>
+        </div>
+        
+        <div class="important">
+            <h3>Limites à connaître</h3>
+            <table class="tableau">
+                <tr>
+                    <th>Suite</th>
+                    <th>Condition</th>
+                    <th>Limite</th>
+                </tr>
+                <tr>
+                    <td>q<sup>n</sup></td>
+                    <td>-1 < q < 1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>q<sup>n</sup></td>
+                    <td>q > 1</td>
+                    <td>+∞</td>
+                </tr>
+                <tr>
+                    <td>q<sup>n</sup></td>
+                    <td>q = 1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>q<sup>n</sup></td>
+                    <td>q ≤ -1</td>
+                    <td>pas de limite</td>
+                </tr>
+                <tr>
+                    <td>1/n</td>
+                    <td>-</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>√n</td>
+                    <td>-</td>
+                    <td>+∞</td>
+                </tr>
+                <tr>
+                    <td>n²</td>
+                    <td>-</td>
+                    <td>+∞</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="definition">
+            <h3>Théorèmes de convergence</h3>
+            <p><strong>1. Théorème de convergence monotone :</strong></p>
+            <p>Toute suite croissante et majorée converge.</p>
+            <p>Toute suite décroissante et minorée converge.</p>
+            <p style="margin-top: 15px;"><strong>2. Théorème des gendarmes :</strong></p>
+            <p>Si u<sub>n</sub> ≤ v<sub>n</sub> ≤ w<sub>n</sub> et lim(u<sub>n</sub>) = lim(w<sub>n</sub>) = ℓ, alors lim(v<sub>n</sub>) = ℓ</p>
+        </div>
+        
+        <h2>VI. Suites récurrentes du type u<sub>n+1</sub> = f(u<sub>n</sub>)</h2>
+        
+        <div class="method">
+            <h3>Méthode d'étude</h3>
+            <p><strong>Étape 1 :</strong> Étudier les variations de f</p>
+            <p><strong>Étape 2 :</strong> Étudier le signe de f(x) - x pour trouver les points fixes</p>
+            <p><strong>Étape 3 :</strong> Montrer par récurrence que la suite est monotone ou bornée</p>
+            <p><strong>Étape 4 :</strong> Conclure sur la convergence</p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple classique</h3>
+            <p><strong>Énoncé :</strong> Soit la suite définie par u<sub>0</sub> = 1 et u<sub>n+1</sub> = (u<sub>n</sub> + 2) / 2</p>
+            <p><strong>1.</strong> Montrer que la suite est décroissante</p>
+            <p><strong>Solution :</strong> u<sub>n+1</sub> - u<sub>n</sub> = (u<sub>n</sub> + 2) / 2 - u<sub>n</sub> = (u<sub>n</sub> + 2 - 2u<sub>n</sub>) / 2 = (2 - u<sub>n</sub>) / 2</p>
+            <p>Si u<sub>n</sub> < 2, alors u<sub>n+1</sub> - u<sub>n</sub> > 0 (croissante)</p>
+            <p>Si u<sub>n</sub> > 2, alors u<sub>n+1</sub> - u<sub>n</sub> < 0 (décroissante)</p>
+            <p><strong>2.</strong> Le point fixe est solution de x = (x + 2) / 2, soit x = 2</p>
+        </div>
+        
+        <h2>VII. Raisonnement par récurrence</h2>
+        
+        <div class="method">
+            <h3>Principe du raisonnement par récurrence</h3>
+            <p>Pour démontrer qu'une propriété P(n) est vraie pour tout entier n ≥ n<sub>0</sub> :</p>
+            <p><strong>Étape 1 - Initialisation :</strong> Vérifier que P(n<sub>0</sub>) est vraie</p>
+            <p><strong>Étape 2 - Hérédité :</strong> Supposer P(n) vraie pour un certain n ≥ n<sub>0</sub> (hypothèse de récurrence)</p>
+            <p style="margin-left: 20px;">Démontrer que P(n+1) est vraie</p>
+            <p><strong>Étape 3 - Conclusion :</strong> Conclure que P(n) est vraie pour tout n ≥ n<sub>0</sub></p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple classique</h3>
+            <p><strong>Démontrer que :</strong> 1 + 2 + 3 + ... + n = n(n+1)/2 pour tout n ≥ 1</p>
+            <p><strong>Initialisation (n=1) :</strong> 1 = 1×2/2 = 1 ✓</p>
+            <p><strong>Hérédité :</strong> Supposons la propriété vraie au rang n.</p>
+            <p>Montrons qu'elle est vraie au rang n+1 :</p>
+            <p>1 + 2 + ... + n + (n+1) = n(n+1)/2 + (n+1)</p>
+            <p>= (n+1)[n/2 + 1] = (n+1)(n+2)/2 ✓</p>
+            <p><strong>Conclusion :</strong> La propriété est vraie pour tout n ≥ 1</p>
+        </div>
+        
+        <div class="important">
+            <h3>⚠️ Points clés à retenir</h3>
+            <p>✓ Suite arithmétique : raison r, u<sub>n</sub> = u<sub>0</sub> + nr</p>
+            <p>✓ Suite géométrique : raison q, u<sub>n</sub> = u<sub>0</sub> × q<sup>n</sup></p>
+            <p>✓ Somme arithmétique : (nb termes) × (premier + dernier) / 2</p>
+            <p>✓ Somme géométrique : u<sub>0</sub> × (1 - q<sup>n+1</sup>) / (1 - q)</p>
+            <p>✓ Toujours penser au raisonnement par récurrence pour les démonstrations</p>
+            <p>✓ Pour les limites : connaître les limites de référence</p>
+        </div>
+    </div>
+</body>
+</html>
