@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contrôles</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      header {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 3rem;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .breadcrumb {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .breadcrumb a {
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+      }
+
+      .breadcrumb a:hover {
+        opacity: 1;
+      }
+
+      .breadcrumb span {
+        color: #fff;
+        margin: 0 0.5rem;
+      }
+
+      .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .control-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .control-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+      }
+
+      .control-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+      }
+
+      .control-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .control-icon {
+        font-size: 2.5rem;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 15px;
+        color: #fff;
+      }
+
+      .control-info h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.3rem;
+      }
+
+      .control-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .control-description {
+        color: #555;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .topics-list {
+        margin-bottom: 1.5rem;
+      }
+
+      .topics-list h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #667eea;
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .topics-list ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .topics-list li {
+        padding: 0.4rem 0;
+        font-size: 0.9rem;
+        color: #666;
+        position: relative;
+        padding-left: 1.2rem;
+      }
+
+      .topics-list li::before {
+        content: "•";
+        color: #667eea;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+      }
+
+      .control-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-secondary {
+        background: #f8fafc;
+        color: #667eea;
+        border: 2px solid #667eea;
+      }
+
+      .btn-secondary:hover {
+        background: #667eea;
+        color: #fff;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .difficulty-easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty-medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty-hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .quick-access {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+
+      .quick-access h3 {
+        color: #fff;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+        text-align: center;
+      }
+
+      .quick-links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .quick-link {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      .quick-link:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: #fff;
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: 20px;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #999;
+        transition: color 0.3s;
+      }
+
+      .modal-close:hover {
+        color: #333;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem 0.5rem;
+        }
+
+        header h1 {
+          font-size: 2rem;
+        }
+
+        .controls-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .control-card {
+          padding: 1.5rem;
+        }
+
+        .control-actions {
+          flex-direction: column;
+        }
+
+        .btn {
+          text-align: center;
+          justify-content: center;
+        }
+
+        .quick-links {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📝 Contrôles - Suites Numériques</h1>
+        <p>
+          Évaluez vos connaissances avec nos contrôles et exercices sur les
+          suites numériques
+        </p>
+      </header>
+
+      <div class="breadcrumb">
+        <a href="../../index.html">Mathématiques</a>
+        <span>></span>
+        <a href="../index.html">Suites</a>
+        <span>></span>
+        <span>Contrôles</span>
+      </div>
+
+      <div class="controls-grid">
+        <!-- Contrôle 1: Suites Arithmétiques et Géométriques -->
+        <div class="control-card" >
+          <div class="control-header">
+            <div class="control-icon">📊</div>
+            <div class="control-info">
+              <h3>Contrôle 1: Bases des Suites</h3>
+              <div class="control-meta">
+                <div class="meta-item">⏱️ 2h</div>
+                <div class="meta-item">
+                  <span class="difficulty difficulty-medium">Moyen</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="control-description">
+            Évaluation sur les notions fondamentales des suites arithmétiques et
+            géométriques.
+          </div>
+          <div class="topics-list">
+            <h4>Chapitres couverts</h4>
+            <ul>
+              <li>Définition des suites</li>
+              <li>Limites de suites</li>
+              <li>Convergence des suites</li>
+              <li>Récurrence</li>
+            </ul>
+          </div>
+          <div class="control-actions">
+            <a
+              class="btn btn-primary"
+              href="pdf/raisonnement-par-recurrence-limites-de-suites-devoir-1.pdf"
+              target="_blank"
+              onclick="event.stopPropagation();"
+            >
+              ▶️ Voir le contrôle
+            </a>
+            <a
+              class="btn btn-secondary"
+              href="pdf/raisonnement-par-recurrence-limites-de-suites-corrige-devoir-1.pdf"
+              target="_blank"
+              onclick="event.stopPropagation();"
+            >
+              ▶️ Voir la correction
+            </a>
+          </div>
+        </div>
+        
+        <!-- Contrôle 2: Suites Récurrentes et Séries -->
+        <div class="control-card">
+          <div class="control-header">
+            <div class="control-icon">📊</div>
+            <div class="control-info">
+              <h3>Contrôle 2: Exemple bac</h3>
+              <div class="control-meta">
+                <div class="meta-item">⏱️ 1h</div>
+                <div class="meta-item">
+                  <span class="difficulty difficulty-medium">Moyen</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="control-description">
+            Extrait bac Amérique du nord 2025
+            <div><strong>Exercice 2</strong></div>
+          </div>
+          <div class="topics-list">
+            <h4>Chapitres couverts</h4>
+            <ul>
+              <li>Calcul sur les suites</li>
+              <li>Limites des suites</li>
+              <li>Algorithmes sur les suites</li>
+              <li>Récurrence</li>
+            </ul>
+          </div>
+          <div class="control-actions">
+            <a
+              class="btn btn-primary"
+              href="pdf/Amérique du Nord Sujet 1 21 mai 2025.pdf"
+              target="_blank"
+              onclick="event.stopPropagation();"
+            >
+              ▶️ Voir le contrôle
+            </a>
+            <a
+              class="btn btn-secondary"
+              href="https://www.apmep.fr/IMG/pdf/Corrige_Ame_rique_du_Nord_J1_spe_21_05_2025_FK_VT_2.pdf"
+              target="_blank"
+              onclick="event.stopPropagation();"
+            >
+              ▶️ Voir la correction
+            </a>
+          </div>
+        </div>
+        
+      </div>
+
+
+    </div>
+
+
+    <script>
+      // Animation d'entrée pour les cartes
+      document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".control-card");
+        cards.forEach((card, index) => {
+          card.style.opacity = "0";
+          card.style.transform = "translateY(20px)";
+
+          setTimeout(() => {
+            card.style.transition = "all 0.6s ease";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+          }, index * 100);
+        });
+      });
+    </script>
+  </body>
+</html>
