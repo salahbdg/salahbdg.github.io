@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probabilités et Statistiques - Terminale</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .definition {
+            background: #f0f4ff;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .formule {
+            background: #fff9e6;
+            padding: 15px;
+            border-left: 5px solid #ffa500;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .exemple {
+            background: #e8f5e9;
+            padding: 20px;
+            border-left: 5px solid #4caf50;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .important {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 5px solid #f44336;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .topic-card {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .topic-card h4 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .topic-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .topic-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .topic-card li:before {
+            content: "▸";
+            position: absolute;
+            left: 5px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .tableau {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .tableau th, .tableau td {
+            border: 2px solid #667eea;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .tableau th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tableau tr:nth-child(even) {
+            background: #f0f4ff;
+        }
+        
+        .interactive-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .controls label {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .controls input, .controls select {
+            padding: 8px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+        }
+        
+        .controls button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .controls button:hover {
+            background: #764ba2;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        canvas {
+            max-height: 400px;
+        }
+        
+        .visualization-box {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px dashed #667eea;
+        }
+        
+        .must-know {
+            background: linear-gradient(135deg, #2c2b2b 0%, #000000 100%);
+            color: white;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .must-know h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .must-know ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .must-know li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.05em;
+        }
+        
+        .must-know li:before {
+            content: "✓";
+            position: absolute;
+            left: 5px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid, .topic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .method-box {
+            background: #fff3e0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .tree-diagram {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 Probabilités et Statistiques - Terminale</h1>
+        
+        <div class="must-know">
+            <h4>🎯 Points essentiels à retenir</h4>
+            <ul>
+                <li><strong>Loi binomiale :</strong> X ~ B(n,p), P(X=k) = C<sub>n</sub><sup>k</sup> × p<sup>k</sup> × (1-p)<sup>n-k</sup></li>
+                <li><strong>Espérance/Variance :</strong> E(X) = np, V(X) = np(1-p) pour une binomiale</li>
+                <li><strong>Loi normale centrée réduite :</strong> utilisation de la table ou calculatrice</li>
+                <li><strong>Intervalle de fluctuation à 95% :</strong> [p - 1,96√(p(1-p)/n) ; p + 1,96√(p(1-p)/n)]</li>
+                <li><strong>Théorème central limite :</strong> approximation normale pour n grand</li>
+            </ul>
+        </div>
+        
+        <h2>I. Vue d'ensemble</h2>
+        
+        <div class="topic-grid">
+            <div class="topic-card">
+                <h4>Variables Aléatoires</h4>
+                <ul>
+                    <li>Définition d'une variable aléatoire</li>
+                    <li>Loi de probabilité d'une variable discrète</li>
+                    <li>Espérance, variance, écart-type</li>
+                    <li>Variables aléatoires continues</li>
+                </ul>
+            </div>
+            <div class="topic-card">
+                <h4>Lois de Probabilité</h4>
+                <ul>
+                    <li>Loi de Bernoulli</li>
+                    <li>Loi binomiale B(n,p)</li>
+                    <li>Loi normale N(μ,σ²)</li>
+                    <li>Loi uniforme</li>
+                    <li>Approximation normale de la loi binomiale</li>
+                </ul>
+            </div>
+            <div class="topic-card">
+                <h4>Échantillonnage</h4>
+                <ul>
+                    <li>Fluctuation d'échantillonnage</li>
+                    <li>Intervalle de fluctuation</li>
+                    <li>Estimation par intervalle de confiance</li>
+                    <li>Tests d'hypothèses</li>
+                </ul>
+            </div>
+            <div class="topic-card">
+                <h4>Probabilités Conditionnelles</h4>
+                <ul>
+                    <li>Définition de P(A|B)</li>
+                    <li>Formule des probabilités totales</li>
+                    <li>Formule de Bayes</li>
+                    <li>Indépendance d'événements</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>II. Variables Aléatoires</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>Une <strong>variable aléatoire</strong> X est une fonction qui associe à chaque issue d'une expérience aléatoire un nombre réel.</p>
+            <p>Par exemple : X = "nombre de fois où on obtient pile en lançant 3 fois une pièce"</p>
+        </div>
+        
+        <div class="formule">
+            <h3>Loi de probabilité</h3>
+            <p>La loi de probabilité de X donne les probabilités P(X = k) pour toutes les valeurs possibles k.</p>
+            <p><strong>Propriétés :</strong></p>
+            <p>• 0 ≤ P(X = k) ≤ 1 pour tout k</p>
+            <p>• ΣP(X = k) = 1 (somme de toutes les probabilités = 1)</p>
+        </div>
+        
+        <div class="formule">
+            <h3>Caractéristiques d'une variable aléatoire</h3>
+            <p><strong>Espérance :</strong> E(X) = Σ k × P(X = k)</p>
+            <p style="margin-left: 20px; color: #666;">→ Moyenne théorique, valeur "attendue"</p>
+            <p><strong>Variance :</strong> V(X) = E(X²) - [E(X)]²</p>
+            <p style="margin-left: 20px; color: #666;">→ Mesure de la dispersion autour de la moyenne</p>
+            <p><strong>Écart-type :</strong> σ(X) = √V(X)</p>
+            <p style="margin-left: 20px; color: #666;">→ Même unité que X</p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Lancer de dé</h3>
+            <p>On lance un dé équilibré. Soit X le résultat obtenu.</p>
+            <table class="tableau">
+                <tr>
+                    <th>k</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                </tr>
+                <tr>
+                    <td><strong>P(X=k)</strong></td>
+                    <td>1/6</td>
+                    <td>1/6</td>
+                    <td>1/6</td>
+                    <td>1/6</td>
+                    <td>1/6</td>
+                    <td>1/6</td>
+                </tr>
+            </table>
+            <p><strong>Espérance :</strong> E(X) = 1×(1/6) + 2×(1/6) + ... + 6×(1/6) = 21/6 = <strong>3,5</strong></p>
+        </div>
+        
+        <h2>III. Loi de Bernoulli</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>Une <strong>épreuve de Bernoulli</strong> est une expérience aléatoire qui n'a que deux issues :</p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li><strong>Succès</strong> avec probabilité p</li>
+                <li><strong>Échec</strong> avec probabilité 1-p</li>
+            </ul>
+            <p style="margin-top: 15px;">La variable aléatoire X qui vaut 1 en cas de succès et 0 en cas d'échec suit une <strong>loi de Bernoulli</strong> de paramètre p.</p>
+        </div>
+        
+        <div class="formule">
+            <h3>Caractéristiques de la loi de Bernoulli</h3>
+            <p><strong>Loi de probabilité :</strong></p>
+            <p>• P(X = 1) = p</p>
+            <p>• P(X = 0) = 1 - p</p>
+            <p><strong>Espérance :</strong> E(X) = p</p>
+            <p><strong>Variance :</strong> V(X) = p(1-p)</p>
+        </div>
+        
+        <h2>IV. Loi Binomiale B(n,p)</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>On répète <strong>n fois de manière indépendante</strong> une épreuve de Bernoulli de paramètre p.</p>
+            <p>La variable aléatoire X qui compte le <strong>nombre de succès</strong> obtenus suit une <strong>loi binomiale</strong> de paramètres n et p.</p>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2em;"><strong>X ~ B(n, p)</strong></p>
+        </div>
+        
+        <div class="formule">
+            <h3>Formule fondamentale</h3>
+            <p style="text-align: center; font-size: 1.2em; margin: 15px 0; background: #f0f4ff; padding: 15px; border-radius: 5px;">
+                <strong>P(X = k) = C<sub>n</sub><sup>k</sup> × p<sup>k</sup> × (1-p)<sup>n-k</sup></strong>
+            </p>
+            <p>où C<sub>n</sub><sup>k</sup> = n! / (k!(n-k)!) est le coefficient binomial</p>
+            <p><strong>Espérance :</strong> E(X) = n × p</p>
+            <p><strong>Variance :</strong> V(X) = n × p × (1-p)</p>
+            <p><strong>Écart-type :</strong> σ(X) = √(n × p × (1-p))</p>
+        </div>
+        
+        <div class="interactive-section">
+            <h3>🎮 Visualisation de la loi binomiale</h3>
+            <div class="controls">
+                <label>n (nombre d'épreuves) :</label>
+                <input type="number" id="binom-n" value="10" min="1" max="50">
+                <label>p (probabilité de succès) :</label>
+                <input type="number" id="binom-p" value="0.5" min="0" max="1" step="0.1">
+                <button onclick="updateBinomial()">Mettre à jour</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="binomialChart"></canvas>
+            </div>
+            <div id="binomial-info" style="text-align: center; padding: 15px; background: #f0f4ff; border-radius: 5px; margin-top: 15px; font-weight: bold; color: #667eea;">
+            </div>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple classique : Contrôle qualité</h3>
+            <p><strong>Énoncé :</strong> Une machine produit des pièces avec 10% de pièces défectueuses. On prélève 20 pièces au hasard.</p>
+            <p>Soit X le nombre de pièces défectueuses. X ~ B(20, 0.1)</p>
+            <p><strong>Question 1 :</strong> Quelle est la probabilité d'avoir exactement 2 pièces défectueuses ?</p>
+            <p><strong>Solution :</strong> P(X = 2) = C<sub>20</sub><sup>2</sup> × 0,1² × 0,9¹⁸ ≈ <strong>0,285</strong></p>
+            <p><strong>Question 2 :</strong> Combien de pièces défectueuses peut-on espérer ?</p>
+            <p><strong>Solution :</strong> E(X) = 20 × 0,1 = <strong>2 pièces</strong></p>
+        </div>
+        
+        <h2>V. Loi Normale N(μ, σ²)</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>Une variable aléatoire X suit une <strong>loi normale</strong> de paramètres μ (espérance) et σ² (variance) si sa densité de probabilité est une courbe en cloche centrée en μ.</p>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2em;"><strong>X ~ N(μ, σ²)</strong></p>
+        </div>
+        
+        <div class="interactive-section">
+            <h3>🎮 Visualisation de la loi normale</h3>
+            <div class="controls">
+                <label>μ (moyenne) :</label>
+                <input type="number" id="normal-mu" value="0" step="0.5">
+                <label>σ (écart-type) :</label>
+                <input type="number" id="normal-sigma" value="1" min="0.1" step="0.1">
+                <button onclick="updateNormal()">Mettre à jour</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="normalChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="formule">
+            <h3>Loi normale centrée réduite N(0,1)</h3>
+            <p>Lorsque μ = 0 et σ = 1, on parle de <strong>loi normale centrée réduite</strong>.</p>
+            <p><strong>Standardisation :</strong> Si X ~ N(μ, σ²), alors Z = (X - μ) / σ ~ N(0, 1)</p>
+        </div>
+        
+        <div class="important">
+            <h3>Règle des "68-95-99,7"</h3>
+            <p>Pour une variable X ~ N(μ, σ²) :</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>P(μ - σ ≤ X ≤ μ + σ) ≈ 0,68 (68%)</li>
+                <li>P(μ - 2σ ≤ X ≤ μ + 2σ) ≈ 0,95 (95%)</li>
+                <li>P(μ - 3σ ≤ X ≤ μ + 3σ) ≈ 0,997 (99,7%)</li>
+            </ul>
+        </div>
+        
+        <div class="visualization-box">
+            <h3 style="color: #667eea;">📊 Règle des 68-95-99,7 (Règle empirique)</h3>
+            <svg width="100%" height="250" style="max-width: 700px; display: block; margin: 20px auto;">
+                <!-- Courbe en cloche simplifiée -->
+                <path d="M 50 200 Q 100 180, 150 120 T 250 30 T 350 30 T 450 120 T 550 180 Q 600 200, 650 200" 
+                      fill="none" stroke="#667eea" stroke-width="3"/>
+                
+                <!-- Zone 68% -->
+                <rect x="250" y="0" width="200" height="200" fill="#667eea" opacity="0.2"/>
+                <text x="350" y="220" text-anchor="middle" font-weight="bold" fill="#667eea">68%</text>
+                <text x="350" y="235" text-anchor="middle" font-size="12" fill="#666">±σ</text>
+                
+                <!-- Zone 95% -->
+                <rect x="150" y="0" width="100" height="200" fill="#7c8ef5" opacity="0.15"/>
+                <rect x="450" y="0" width="100" height="200" fill="#7c8ef5" opacity="0.15"/>
+                <text x="200" y="220" text-anchor="middle" font-weight="bold" fill="#7c8ef5">95%</text>
+                <text x="500" y="220" text-anchor="middle" font-weight="bold" fill="#7c8ef5">95%</text>
+                <text x="150" y="235" text-anchor="middle" font-size="12" fill="#666">-2σ</text>
+                <text x="550" y="235" text-anchor="middle" font-size="12" fill="#666">+2σ</text>
+                
+                <!-- Moyenne -->
+                <line x1="350" y1="30" x2="350" y2="210" stroke="#f44336" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="350" y="15" text-anchor="middle" font-weight="bold" fill="#f44336">μ</text>
+            </svg>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Tailles d'une population</h3>
+            <p>Les tailles des adultes suivent une loi normale N(170, 100) (μ=170 cm, σ=10 cm).</p>
+            <p><strong>Question :</strong> Quelle proportion de personnes mesure entre 160 et 180 cm ?</p>
+            <p><strong>Solution :</strong> [160, 180] = [μ-σ, μ+σ], donc environ <strong>68%</strong> des personnes</p>
+        </div>
+        
+        <h2>VI. Approximation Normale de la Loi Binomiale</h2>
+        
+        <div class="definition">
+            <h3>Théorème (admis)</h3>
+            <p>Si X ~ B(n, p) avec <strong>n ≥ 30</strong>, <strong>np ≥ 5</strong> et <strong>n(1-p) ≥ 5</strong>, alors :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 15px 0; background: #f0f4ff; padding: 15px; border-radius: 5px;">
+                <strong>X ≈ N(np, np(1-p))</strong>
+            </p>
+        </div>
+        
+        <div class="interactive-section">
+            <h3>🎮 Comparaison Binomiale vs Normale</h3>
+            <div class="controls">
+                <label>n :</label>
+                <input type="number" id="approx-n" value="50" min="10" max="200">
+                <label>p :</label>
+                <input type="number" id="approx-p" value="0.3" min="0.1" max="0.9" step="0.1">
+                <button onclick="updateApproximation()">Mettre à jour</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="approximationChart"></canvas>
+            </div>
+            <div id="approx-info" style="text-align: center; padding: 15px; background: #f0f4ff; border-radius: 5px; margin-top: 15px; font-weight: bold; color: #667eea;">
+            </div>
+        </div>
+        
+        <h2>VII. Probabilités Conditionnelles</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>La <strong>probabilité conditionnelle</strong> de A sachant B est :</p>
+            <p style="text-align: center; font-size: 1.3em; margin: 15px 0;">
+                <strong>P<sub>B</sub>(A) = P(A|B) = P(A ∩ B) / P(B)</strong>
+            </p>
+            <p>avec P(B) > 0</p>
+        </div>
+        
+        <div class="tree-diagram">
+            <h3 style="color: #667eea;">Arbre de probabilités</h3>
+            <svg width="100%" height="300" style="max-width: 600px;">
+                <!-- Noeud initial -->
+                <circle cx="50" cy="150" r="8" fill="#667eea"/>
+                
+                <!-- Branche supérieure (A) -->
+                <line x1="50" y1="150" x2="200" y2="80" stroke="#667eea" stroke-width="2"/>
+                <circle cx="200" cy="80" r="8" fill="#667eea"/>
+                <text x="120" y="100" fill="#667eea" font-weight="bold">P(A) = p</text>
+                <text x="215" y="85" fill="#667eea" font-weight="bold">A</text>
+                
+                <!-- Branche inférieure (Ā) -->
+                <line x1="50" y1="150" x2="200" y2="220" stroke="#764ba2" stroke-width="2"/>
+                <circle cx="200" cy="220" r="8" fill="#764ba2"/>
+                <text x="120" y="200" fill="#764ba2" font-weight="bold">P(Ā) = 1-p</text>
+                <text x="215" y="225" fill="#764ba2" font-weight="bold">Ā</text>
+                
+                <!-- Sous-branches depuis A -->
+                <line x1="200" y1="80" x2="350" y2="50" stroke="#4caf50" stroke-width="2"/>
+                <circle cx="350" cy="50" r="6" fill="#4caf50"/>
+                <text x="270" y="55" fill="#4caf50" font-size="14">P<sub>A</sub>(B)</text>
+                <text x="365" y="55" fill="#4caf50" font-weight="bold">B</text>
+                
+                <line x1="200" y1="80" x2="350" y2="110" stroke="#ff9800" stroke-width="2"/>
+                <circle cx="350" cy="110" r="6" fill="#ff9800"/>
+                <text x="270" y="115" fill="#ff9800" font-size="14">P<sub>A</sub>(B̄)</text>
+                <text x="365" y="115" fill="#ff9800" font-weight="bold">B̄</text>
+                
+                <!-- Sous-branches depuis Ā -->
+                <line x1="200" y1="220" x2="350" y2="190" stroke="#4caf50" stroke-width="2"/>
+                <circle cx="350" cy="190" r="6" fill="#4caf50"/>
+                <text x="270" y="195" fill="#4caf50" font-size="14">P<sub>Ā</sub>(B)</text>
+                <text x="365" y="195" fill="#4caf50" font-weight="bold">B</text>
+                
+                <line x1="200" y1="220" x2="350" y2="250" stroke="#ff9800" stroke-width="2"/>
+                <circle cx="350" cy="250" r="6" fill="#ff9800"/>
+                <text x="270" y="255" fill="#ff9800" font-size="14">P<sub>Ā</sub>(B̄)</text>
+                <text x="365" y="255" fill="#ff9800" font-weight="bold">B̄</text>
+            </svg>
+        </div>
+        
+        <div class="formule">
+            <h3>Formules importantes</h3>
+            <p><strong>Formule des probabilités totales :</strong></p>
+            <p style="margin-left: 20px;">P(B) = P(A ∩ B) + P(Ā ∩ B) = P(A) × P<sub>A</sub>(B) + P(Ā) × P<sub>Ā</sub>(B)</p>
+            
+            <p style="margin-top: 15px;"><strong>Formule de Bayes :</strong></p>
+            <p style="margin-left: 20px;">P<sub>B</sub>(A) = [P(A) × P<sub>A</sub>(B)] / P(B)</p>
+            
+            <p style="margin-top: 15px;"><strong>Indépendance :</strong></p>
+            <p style="margin-left: 20px;">A et B sont indépendants si P(A ∩ B) = P(A) × P(B)</p>
+            <p style="margin-left: 20px;">Équivalent à : P<sub>B</sub>(A) = P(A) ou P<sub>A</sub>(B) = P(B)</p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple classique : Test médical</h3>
+            <p><strong>Contexte :</strong> Un test de dépistage d'une maladie donne :</p>
+            <ul style="margin-left: 30px;">
+                <li>Résultat positif dans 95% des cas si la personne est malade (sensibilité)</li>
+                <li>Résultat négatif dans 90% des cas si la personne est saine (spécificité)</li>
+                <li>1% de la population est malade</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>Question :</strong> Si le test est positif, quelle est la probabilité d'être vraiment malade ?</p>
+            <p><strong>Solution :</strong></p>
+            <p>Soit M = "être malade" et T+ = "test positif"</p>
+            <p>P(M) = 0,01 donc P(M̄) = 0,99</p>
+            <p>P<sub>M</sub>(T+) = 0,95 et P<sub>M̄</sub>(T+) = 0,10</p>
+            <p>Par la formule des probabilités totales :</p>
+            <p>P(T+) = 0,01 × 0,95 + 0,99 × 0,10 = 0,0095 + 0,099 = 0,1085</p>
+            <p>Par la formule de Bayes :</p>
+            <p>P<sub>T+</sub>(M) = (0,01 × 0,95) / 0,1085 ≈ <strong>0,088 soit 8,8%</strong></p>
+            <p style="color: #f44336; font-weight: bold; margin-top: 10px;">⚠️ Résultat surprenant : même avec un test positif, on n'a que 8,8% de chances d'être malade !</p>
+        </div>
+        
+        <h2>VIII. Échantillonnage et Intervalles</h2>
+        
+        <div class="definition">
+            <h3>Fluctuation d'échantillonnage</h3>
+            <p>Dans un échantillon de taille n, la <strong>fréquence observée</strong> F fluctue autour de la <strong>proportion théorique</strong> p.</p>
+            <p>Pour n assez grand, la variable aléatoire F suit approximativement une loi normale :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;">
+                <strong>F ≈ N(p, p(1-p)/n)</strong>
+            </p>
+        </div>
+        
+        <div class="formule">
+            <h3>Intervalle de fluctuation au seuil de 95%</h3>
+            <p>Si n ≥ 30, np ≥ 5 et n(1-p) ≥ 5, alors la fréquence observée F appartient à l'intervalle :</p>
+            <p style="text-align: center; font-size: 1.1em; background: #fff9e6; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                <strong>I = [p - 1,96√(p(1-p)/n) ; p + 1,96√(p(1-p)/n)]</strong>
+            </p>
+            <p>avec une probabilité d'environ 95%</p>
+        </div>
+        
+        <div class="interactive-section">
+            <h3>🎮 Calculateur d'intervalle de fluctuation</h3>
+            <div class="controls">
+                <label>n (taille échantillon) :</label>
+                <input type="number" id="fluc-n" value="100" min="30">
+                <label>p (proportion) :</label>
+                <input type="number" id="fluc-p" value="0.3" min="0" max="1" step="0.01">
+                <button onclick="updateFluctuation()">Calculer</button>
+            </div>
+            <div id="fluc-result" style="text-align: center; padding: 20px; background: #e8f5e9; border-radius: 5px; margin-top: 15px; font-size: 1.1em;">
+            </div>
+        </div>
+        
+        <div class="formule">
+            <h3>Intervalle de confiance au niveau 95%</h3>
+            <p>Pour <strong>estimer</strong> une proportion p inconnue à partir d'une fréquence f observée sur un échantillon de taille n :</p>
+            <p style="text-align: center; font-size: 1.1em; background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                <strong>I = [f - 1/√n ; f + 1/√n]</strong>
+            </p>
+            <p>La vraie proportion p a environ 95% de chances d'être dans cet intervalle.</p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Sondage électoral</h3>
+            <p><strong>Contexte :</strong> Dans un sondage de 1000 personnes, 520 déclarent voter pour le candidat A.</p>
+            <p><strong>Question :</strong> Donner un intervalle de confiance à 95% pour la proportion réelle.</p>
+            <p><strong>Solution :</strong></p>
+            <p>f = 520/1000 = 0,52</p>
+            <p>1/√n = 1/√1000 ≈ 0,032</p>
+            <p>I = [0,52 - 0,032 ; 0,52 + 0,032] = <strong>[0,488 ; 0,552]</strong></p>
+            <p>Soit environ <strong>[48,8% ; 55,2%]</strong></p>
+        </div>
+        
+        <h2>IX. Exercices types et méthodes</h2>
+        
+        <div class="method-box">
+            <h3>Méthode 1 : Reconnaître une loi binomiale</h3>
+            <p><strong>Conditions à vérifier :</strong></p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li>✓ On répète n fois une même expérience</li>
+                <li>✓ Chaque expérience a 2 issues (succès/échec)</li>
+                <li>✓ Les répétitions sont indépendantes</li>
+                <li>✓ La probabilité de succès p est constante</li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>→ Alors X = nombre de succès suit B(n, p)</strong></p>
+        </div>
+        
+        <div class="method-box">
+            <h3>Méthode 2 : Utiliser un arbre pondéré</h3>
+            <p><strong>Étapes :</strong></p>
+            <ol style="margin-left: 30px; margin-top: 10px;">
+                <li>Dessiner l'arbre avec toutes les branches</li>
+                <li>Pondérer chaque branche avec sa probabilité</li>
+                <li>Pour calculer P(A ∩ B) : multiplier le long d'un chemin</li>
+                <li>Pour calculer P(B) : additionner tous les chemins menant à B</li>
+            </ol>
+        </div>
+        
+        <div class="method-box">
+            <h3>Méthode 3 : Test d'hypothèse</h3>
+            <p><strong>Pour accepter ou rejeter une hypothèse sur p :</strong></p>
+            <ol style="margin-left: 30px; margin-top: 10px;">
+                <li>Calculer l'intervalle de fluctuation I au seuil de 95%</li>
+                <li>Calculer la fréquence observée f dans l'échantillon</li>
+                <li>Si f ∈ I : on accepte l'hypothèse au seuil de 5%</li>
+                <li>Si f ∉ I : on rejette l'hypothèse au seuil de 5%</li>
+            </ol>
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="chart-container">
+                <h3 style="text-align: center; color: #667eea;">Loi discrète vs continue</h3>
+                <table class="tableau">
+                    <tr>
+                        <th>Loi discrète</th>
+                        <th>Loi continue</th>
+                    </tr>
+                    <tr>
+                        <td>Valeurs isolées</td>
+                        <td>Intervalle de valeurs</td>
+                    </tr>
+                    <tr>
+                        <td>P(X = k)</td>
+                        <td>P(a ≤ X ≤ b)</td>
+                    </tr>
+                    <tr>
+                        <td>Ex: Binomiale</td>
+                        <td>Ex: Normale</td>
+                    </tr>
+                    <tr>
+                        <td>Histogramme</td>
+                        <td>Courbe (densité)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="chart-container">
+                <h3 style="text-align: center; color: #667eea;">Fluctuation vs Confiance</h3>
+                <table class="tableau">
+                    <tr>
+                        <th>Fluctuation</th>
+                        <th>Confiance</th>
+                    </tr>
+                    <tr>
+                        <td>p connu</td>
+                        <td>p inconnu</td>
+                    </tr>
+                    <tr>
+                        <td>Estimer où sera f</td>
+                        <td>Estimer où est p</td>
+                    </tr>
+                    <tr>
+                        <td>Test d'hypothèse</td>
+                        <td>Estimation</td>
+                    </tr>
+                    <tr>
+                        <td>Formule avec p</td>
+                        <td>Formule avec f</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="important">
+            <h3>⚠️ Erreurs classiques à éviter</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>❌ Confondre P(A|B) et P(B|A) - ce n'est pas la même chose !</li>
+                <li>❌ Utiliser la loi binomiale sans vérifier l'indépendance</li>
+                <li>❌ Oublier de vérifier les conditions d'approximation normale</li>
+                <li>❌ Confondre intervalle de fluctuation et intervalle de confiance</li>
+                <li>❌ Utiliser p au lieu de f dans l'intervalle de confiance</li>
+            </ul>
+        </div>
+        
+        <div class="must-know" style="margin-top: 40px;">
+            <h4>📚 Formulaire à connaître par cœur</h4>
+            <ul>
+                <li><strong>Binomiale :</strong> P(X=k) = C<sub>n</sub><sup>k</sup> × p<sup>k</sup> × (1-p)<sup>n-k</sup>, E(X)=np, V(X)=np(1-p)</li>
+                <li><strong>Standardisation :</strong> Si X~N(μ,σ²) alors Z=(X-μ)/σ ~ N(0,1)</li>
+                <li><strong>Probabilité conditionnelle :</strong> P(A|B) = P(A∩B) / P(B)</li>
+                <li><strong>Probabilités totales :</strong> P(B) = P(A)×P<sub>A</sub>(B) + P(Ā)×P<sub>Ā</sub>(B)</li>
+                <li><strong>Bayes :</strong> P<sub>B</sub>(A) = [P(A)×P<sub>A</sub>(B)] / P(B)</li>
+                <li><strong>Fluctuation 95% :</strong> [p - 1,96√(p(1-p)/n) ; p + 1,96√(p(1-p)/n)]</li>
+                <li><strong>Confiance 95% :</strong> [f - 1/√n ; f + 1/√n]</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration globale
+        Chart.defaults.font.size = 12;
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        
+        // Fonction factorielle
+        function factorial(n) {
+            if (n <= 1) return 1;
+            return n * factorial(n - 1);
+        }
+        
+        // Coefficient binomial
+        function binomial(n, k) {
+            if (k < 0 || k > n) return 0;
+            return factorial(n) / (factorial(k) * factorial(n - k));
+        }
+        
+        // Loi binomiale
+        let binomialChart;
+        function updateBinomial() {
+            const n = parseInt(document.getElementById('binom-n').value);
+            const p = parseFloat(document.getElementById('binom-p').value);
+            
+            const data = [];
+            const labels = [];
+            
+            for (let k = 0; k <= n; k++) {
+                labels.push(k);
+                const prob = binomial(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+                data.push(prob);
+            }
+            
+            if (binomialChart) binomialChart.destroy();
+            
+            const ctx = document.getElementById('binomialChart').getContext('2d');
+            binomialChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'P(X = k)',
+                        data: data,
+                        backgroundColor: '#667eea',
+                        borderColor: '#333',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        title: {
+                            display: true,
+                            text: `Loi Binomiale B(${n}, ${p})`,
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Probabilité' }
+                        },
+                        x: {
+                            title: { display: true, text: 'k (nombre de succès)' }
+                        }
+                    }
+                }
+            });
+            
+            const esperance = n * p;
+            const variance = n * p * (1 - p);
+            const ecartType = Math.sqrt(variance);
+            
+            document.getElementById('binomial-info').innerHTML = 
+                `E(X) = ${esperance.toFixed(2)} | V(X) = ${variance.toFixed(2)} | σ(X) = ${ecartType.toFixed(2)}`;
+        }
+        
+        // Loi normale
+        let normalChart;
+        function normalPDF(x, mu, sigma) {
+            return (1 / (sigma * Math.sqrt(2 * Math.PI))) * 
+                   Math.exp(-0.5 * Math.pow((x - mu) / sigma, 2));
+        }
+        
+        function updateNormal() {
+            const mu = parseFloat(document.getElementById('normal-mu').value);
+            const sigma = parseFloat(document.getElementById('normal-sigma').value);
+            
+            const data = [];
+            const labels = [];
+            const start = mu - 4 * sigma;
+            const end = mu + 4 * sigma;
+            const step = (end - start) / 100;
+            
+            for (let x = start; x <= end; x += step) {
+                labels.push(x.toFixed(2));
+                data.push(normalPDF(x, mu, sigma));
+            }
+            
+            if (normalChart) normalChart.destroy();
+            
+            const ctx = document.getElementById('normalChart').getContext('2d');
+            normalChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Densité de probabilité',
+                        data: data,
+                        borderColor: '#764ba2',
+                        backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        title: {
+                            display: true,
+                            text: `Loi Normale N(${mu}, ${sigma}²)`,
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { display: false }
+                    }
+                }
+            });
+        }
+        
+        // Approximation normale
+        let approximationChart;
+        function updateApproximation() {
+            const n = parseInt(document.getElementById('approx-n').value);
+            const p = parseFloat(document.getElementById('approx-p').value);
+            
+            const mu = n * p;
+            const sigma = Math.sqrt(n * p * (1 - p));
+            
+            // Données binomiales
+            const binomData = [];
+            const normalData = [];
+            const labels = [];
+            
+            for (let k = 0; k <= n; k++) {
+                labels.push(k);
+                binomData.push(binomial(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k));
+                normalData.push(normalPDF(k, mu, sigma));
+            }
+            
+            if (approximationChart) approximationChart.destroy();
+            
+            const ctx = document.getElementById('approximationChart').getContext('2d');
+            approximationChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Loi Binomiale B(' + n + ',' + p + ')',
+                        data: binomData,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.3)',
+                        type: 'bar',
+                        borderWidth: 1
+                    }, {
+                        label: 'Approximation Normale N(' + mu.toFixed(1) + ',' + sigma.toFixed(1) + '²)',
+                        data: normalData,
+                        borderColor: '#f44336',
+                        backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        tension: 0.4,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        title: {
+                            display: true,
+                            text: 'Approximation normale de la loi binomiale',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+            
+            const conditions = [n >= 30, n * p >= 5, n * (1 - p) >= 5];
+            const allConditions = conditions.every(c => c);
+            
+            document.getElementById('approx-info').innerHTML = 
+                `Conditions : n=${n} ${n >= 30 ? '✓' : '✗'} | np=${(n*p).toFixed(1)} ${n*p >= 5 ? '✓' : '✗'} | n(1-p)=${(n*(1-p)).toFixed(1)} ${n*(1-p) >= 5 ? '✓' : '✗'}<br>` +
+                `${allConditions ? '<span style="color: #4caf50;">✓ Approximation valide</span>' : '<span style="color: #f44336;">✗ Conditions non remplies</span>'}`;
+        }
+        
+        // Intervalle de fluctuation
+        function updateFluctuation() {
+            const n = parseInt(document.getElementById('fluc-n').value);
+            const p = parseFloat(document.getElementById('fluc-p').value);
+            
+            const marge = 1.96 * Math.sqrt(p * (1 - p) / n);
+            const min = p - marge;
+            const max = p + marge;
+            
+            document.getElementById('fluc-result').innerHTML = 
+                `<strong>Intervalle de fluctuation à 95% :</strong><br>` +
+                `I = [${min.toFixed(4)} ; ${max.toFixed(4)}]<br>` +
+                `soit environ [${(min * 100).toFixed(2)}% ; ${(max * 100).toFixed(2)}%]<br><br>` +
+                `<span style="color: #666;">La fréquence observée a 95% de chances d'être dans cet intervalle</span>`;
+        }
+        
+        // Initialisation
+        window.onload = function() {
+            updateBinomial();
+            updateNormal();
+            updateApproximation();
+            updateFluctuation();
+        };
+    </script>
+</body>
+</html>
