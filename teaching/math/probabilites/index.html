@@ -796,105 +796,84 @@
 
       <div class="tree-diagram">
         <h3 style="color: #667eea">Arbre de probabilités</h3>
-        <svg width="100%" height="300" style="max-width: 600px">
+        <svg
+          width="100%"
+          height="600"
+          viewBox="0 0 700 300"
+          preserveAspectRatio="xMidYMid meet"
+          style="max-width: 1200px; display: block;"
+          aria-label="Arbre de probabilités avec A et Ā puis B et B barre"
+        >
+          <!-- Styles -->
+          <defs>
+        <style>
+          .node { fill: #667eea; }
+          .node-alt { fill: #764ba2; }
+          .leaf-green { fill: #4caf50; }
+          .leaf-orange { fill: #ff9800; }
+          .line-main { stroke: #667eea; stroke-width: 2; stroke-linecap: round; }
+          .line-alt { stroke: #764ba2; stroke-width: 2; stroke-linecap: round; }
+          .line-green { stroke: #4caf50; stroke-width: 2; stroke-linecap: round; }
+          .line-orange { stroke: #ff9800; stroke-width: 2; stroke-linecap: round; }
+          .label { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 14px; fill: #333; font-weight: 600; }
+          .small { font-size: 12px; fill: #666; font-weight: 600; }
+        </style>
+          </defs>
+
           <!-- Noeud initial -->
-          <circle cx="50" cy="150" r="8" fill="#667eea" />
+          <circle cx="70" cy="150" r="8" class="node" />
 
           <!-- Branche supérieure (A) -->
-          <line
-            x1="50"
-            y1="150"
-            x2="200"
-            y2="80"
-            stroke="#667eea"
-            stroke-width="2"
-          />
-          <circle cx="200" cy="80" r="8" fill="#667eea" />
-          <text x="120" y="100" fill="#667eea" font-weight="bold">
-            P(A) = p
+          <line x1="70" y1="150" x2="230" y2="80" class="line-main" />
+          <circle cx="230" cy="80" r="8" class="node" />
+          <text x="120" y="105" class="small" fill="#667eea">
+        P(A) = p
           </text>
-          <text x="215" y="85" fill="#667eea" font-weight="bold">A</text>
+          <text x="245" y="85" class="label" fill="#667eea">A</text>
 
           <!-- Branche inférieure (Ā) -->
-          <line
-            x1="50"
-            y1="150"
-            x2="200"
-            y2="220"
-            stroke="#764ba2"
-            stroke-width="2"
-          />
-          <circle cx="200" cy="220" r="8" fill="#764ba2" />
-          <text x="120" y="200" fill="#764ba2" font-weight="bold">
-            P(Ā) = 1-p
+          <line x1="70" y1="150" x2="230" y2="220" class="line-alt" />
+          <circle cx="230" cy="220" r="8" class="node-alt" />
+          <text x="120" y="200" class="small" fill="#764ba2">
+        P(Ā) = 1 - p
           </text>
-          <text x="215" y="225" fill="#764ba2" font-weight="bold">Ā</text>
+          <text x="245" y="225" class="label" fill="#764ba2">Ā</text>
 
           <!-- Sous-branches depuis A -->
-          <line
-            x1="200"
-            y1="80"
-            x2="350"
-            y2="50"
-            stroke="#4caf50"
-            stroke-width="2"
-          />
-          <circle cx="350" cy="50" r="6" fill="#4caf50" />
-          <text x="270" y="55" fill="#4caf50" font-size="14">
-            P
-            <sub>A</sub>
-            (B)
+          <line x1="230" y1="80" x2="400" y2="50" class="line-green" />
+          <circle cx="400" cy="50" r="6" class="leaf-green" />
+          <text x="270" y="60" class="small" fill="#4caf50">
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="11">A</tspan><tspan>(B)</tspan>
           </text>
-          <text x="365" y="55" fill="#4caf50" font-weight="bold">B</text>
+          <text x="415" y="55" class="label" fill="#4caf50">B</text>
 
-          <line
-            x1="200"
-            y1="80"
-            x2="350"
-            y2="110"
-            stroke="#ff9800"
-            stroke-width="2"
-          />
-          <circle cx="350" cy="110" r="6" fill="#ff9800" />
-          <text x="270" y="115" fill="#ff9800" font-size="14">
-            P
-            <sub>A</sub>
-            (B̄)
+          <line x1="230" y1="80" x2="400" y2="110" class="line-orange" />
+          <circle cx="400" cy="110" r="6" class="leaf-orange" />
+          <text x="270" y="125" class="small" fill="#ff9800">
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="11">A</tspan><tspan>(B̄)</tspan>
           </text>
-          <text x="365" y="115" fill="#ff9800" font-weight="bold">B̄</text>
+          <text x="415" y="115" class="label" fill="#ff9800">B̄</text>
 
           <!-- Sous-branches depuis Ā -->
-          <line
-            x1="200"
-            y1="220"
-            x2="350"
-            y2="190"
-            stroke="#4caf50"
-            stroke-width="2"
-          />
-          <circle cx="350" cy="190" r="6" fill="#4caf50" />
-          <text x="270" y="195" fill="#4caf50" font-size="14">
-            P
-            <sub>Ā</sub>
-            (B)
+          <line x1="230" y1="220" x2="400" y2="190" class="line-green" />
+          <circle cx="400" cy="190" r="6" class="leaf-green" />
+          <text x="270" y="200" class="small" fill="#4caf50"></text>
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="11">Ā</tspan><tspan>(B)</tspan>
           </text>
-          <text x="365" y="195" fill="#4caf50" font-weight="bold">B</text>
+          <text x="415" y="195" class="label" fill="#4caf50">B</text>
 
-          <line
-            x1="200"
-            y1="220"
-            x2="350"
-            y2="250"
-            stroke="#ff9800"
-            stroke-width="2"
-          />
-          <circle cx="350" cy="250" r="6" fill="#ff9800" />
-          <text x="270" y="255" fill="#ff9800" font-size="14">
-            P
-            <sub>Ā</sub>
-            (B̄)
+          <line x1="230" y1="220" x2="400" y2="250" class="line-orange" />
+          <circle cx="400" cy="250" r="6" class="leaf-orange" />
+          <text x="270" y="260" class="small" fill="#ff9800">
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="11">Ā</tspan><tspan>(B̄)</tspan>
           </text>
-          <text x="365" y="255" fill="#ff9800" font-weight="bold">B̄</text>
+          <text x="415" y="255" class="label" fill="#ff9800">B̄</text>
+
+          <!-- Exemple de produits sur les branches (facultatif, discret et léger) -->
+          <text x="480" y="70" class="small" fill="#444">P(A ∩ B) = p · P_A(B)</text>
+          <text x="480" y="120" class="small" fill="#444">P(A ∩ B̄) = p · P_A(B̄)</text>
+          <text x="480" y="200" class="small" fill="#444">P(Ā ∩ B) = (1-p) · P_Ā(B)</text>
+          <text x="480" y="250" class="small" fill="#444">P(Ā ∩ B̄) = (1-p) · P_Ā(B̄)</text>
         </svg>
       </div>
 
