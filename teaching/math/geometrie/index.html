@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Géométrie dans l'Espace - Terminale</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .definition {
+            background: #f0f4ff;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .formule {
+            background: #fff9e6;
+            padding: 15px;
+            border-left: 5px solid #ffa500;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .exemple {
+            background: #e8f5e9;
+            padding: 20px;
+            border-left: 5px solid #4caf50;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .important {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 5px solid #f44336;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .tableau {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .tableau th, .tableau td {
+            border: 2px solid #667eea;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .tableau th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tableau tr:nth-child(even) {
+            background: #f0f4ff;
+        }
+        
+        .method-box {
+            background: #fff3e0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .visualization-box {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px dashed #667eea;
+        }
+        
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .topic-card {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .topic-card h4 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .topic-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .topic-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .topic-card li:before {
+            content: "▸";
+            position: absolute;
+            left: 5px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .must-know {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .must-know h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .must-know ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .must-know li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.05em;
+        }
+        
+        .must-know li:before {
+            content: "✓";
+            position: absolute;
+            left: 5px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid, .topic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        sub {
+            font-size: 0.75em;
+        }
+        
+        sup {
+            font-size: 0.75em;
+        }
+        
+        .vector {
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .vector:before {
+            content: "→";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 Géométrie dans l'Espace - Terminale</h1>
+        
+        <div class="must-know">
+            <h4>🎯 Points essentiels à retenir</h4>
+            <ul>
+                <li><strong>Vecteur directeur :</strong> tout vecteur non nul colinéaire à la direction</li>
+                <li><strong>Vecteur normal :</strong> vecteur orthogonal au plan</li>
+                <li><strong>Équation de plan :</strong> ax + by + cz + d = 0 où (a,b,c) est un vecteur normal</li>
+                <li><strong>Équation paramétrique de droite :</strong> x = x₀ + at, y = y₀ + bt, z = z₀ + ct</li>
+                <li><strong>Produit scalaire :</strong> u⃗·v⃗ = xx' + yy' + zz' = ||u⃗||·||v⃗||·cos(θ)</li>
+                <li><strong>Distance point-plan :</strong> d = |ax₀ + by₀ + cz₀ + d| / √(a² + b² + c²)</li>
+            </ul>
+        </div>
+        
+        <h2>I. Vue d'ensemble</h2>
+        
+        <div class="topic-grid">
+            <div class="topic-card">
+                <h4>Repérage dans l'Espace</h4>
+                <ul>
+                    <li>Repère orthonormé (O, i⃗, j⃗, k⃗)</li>
+                    <li>Coordonnées d'un point M(x, y, z)</li>
+                    <li>Coordonnées d'un vecteur u⃗(a, b, c)</li>
+                    <li>Distance entre deux points</li>
+                </ul>
+            </div>
+            <div class="topic-card">
+                <h4>Vecteurs de l'Espace</h4>
+                <ul>
+                    <li>Opérations sur les vecteurs</li>
+                    <li>Colinéarité de vecteurs</li>
+                    <li>Coplanarité de vecteurs</li>
+                    <li>Produit scalaire dans l'espace</li>
+                </ul>
+            </div>
+            <div class="topic-card">
+                <h4>Droites de l'Espace</h4>
+                <ul>
+                    <li>Représentation paramétrique</li>
+                    <li>Vecteur directeur</li>
+                    <li>Positions relatives de droites</li>
+                    <li>Intersection de droites</li>
+                </ul>
+            </div>
+            <div class="topic-card">
+                <h4>Plans de l'Espace</h4>
+                <ul>
+                    <li>Équation cartésienne</li>
+                    <li>Vecteur normal</li>
+                    <li>Représentation paramétrique</li>
+                    <li>Positions relatives : plan/plan, plan/droite</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>II. Repérage dans l'Espace</h2>
+        
+        <div class="definition">
+            <h3>Repère de l'espace</h3>
+            <p>Un <strong>repère de l'espace</strong> est constitué d'un point O (origine) et de trois vecteurs i⃗, j⃗, k⃗ non coplanaires.</p>
+            <p>On note : (O, i⃗, j⃗, k⃗)</p>
+            <p>Si les vecteurs sont deux à deux orthogonaux et de norme 1, le repère est <strong>orthonormé</strong>.</p>
+        </div>
+        
+        <div class="visualization-box">
+            <h3 style="color: #667eea;">📊 Repère orthonormé dans l'espace</h3>
+            <svg width="100%" height="300" style="max-width: 500px; display: block; margin: 20px auto;">
+                <!-- Axes -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#333" />
+                    </marker>
+                </defs>
+                
+                <!-- Axe z (vertical) -->
+                <line x1="250" y1="250" x2="250" y2="50" stroke="#f44336" stroke-width="3" marker-end="url(#arrowhead)"/>
+                <text x="260" y="40" fill="#f44336" font-weight="bold" font-size="18">k⃗ (z)</text>
+                
+                <!-- Axe x -->
+                <line x1="250" y1="250" x2="400" y2="200" stroke="#4caf50" stroke-width="3" marker-end="url(#arrowhead)"/>
+                <text x="410" y="200" fill="#4caf50" font-weight="bold" font-size="18">i⃗ (x)</text>
+                
+                <!-- Axe y -->
+                <line x1="250" y1="250" x2="150" y2="200" stroke="#2196f3" stroke-width="3" marker-end="url(#arrowhead)"/>
+                <text x="120" y="200" fill="#2196f3" font-weight="bold" font-size="18">j⃗ (y)</text>
+                
+                <!-- Origine -->
+                <circle cx="250" cy="250" r="6" fill="#333"/>
+                <text x="260" y="270" fill="#333" font-weight="bold" font-size="18">O</text>
+                
+                <!-- Point M -->
+                <circle cx="350" cy="120" r="5" fill="#667eea"/>
+                <text x="360" y="120" fill="#667eea" font-weight="bold" font-size="16">M(x,y,z)</text>
+                
+                <!-- Projection -->
+                <line x1="250" y1="250" x2="350" y2="120" stroke="#667eea" stroke-width="2" stroke-dasharray="5,5"/>
+            </svg>
+            <p style="text-align: center; color: #764ba2; font-weight: bold; margin-top: 15px;">
+                Tout point M est repéré par ses coordonnées (x, y, z)
+            </p>
+        </div>
+        
+        <div class="formule">
+            <h3>Formules fondamentales</h3>
+            <p><strong>Coordonnées d'un vecteur :</strong></p>
+            <p>Si A(x<sub>A</sub>, y<sub>A</sub>, z<sub>A</sub>) et B(x<sub>B</sub>, y<sub>B</sub>, z<sub>B</sub>), alors :</p>
+            <p style="margin-left: 20px;">AB⃗(x<sub>B</sub> - x<sub>A</sub>, y<sub>B</sub> - y<sub>A</sub>, z<sub>B</sub> - z<sub>A</sub>)</p>
+            
+            <p style="margin-top: 15px;"><strong>Distance entre deux points :</strong></p>
+            <p style="margin-left: 20px;">AB = √[(x<sub>B</sub> - x<sub>A</sub>)² + (y<sub>B</sub> - y<sub>A</sub>)² + (z<sub>B</sub> - z<sub>A</sub>)²]</p>
+            
+            <p style="margin-top: 15px;"><strong>Milieu d'un segment :</strong></p>
+            <p style="margin-left: 20px;">I((x<sub>A</sub> + x<sub>B</sub>)/2, (y<sub>A</sub> + y<sub>B</sub>)/2, (z<sub>A</sub> + z<sub>B</sub>)/2)</p>
+            
+            <p style="margin-top: 15px;"><strong>Norme d'un vecteur :</strong></p>
+            <p style="margin-left: 20px;">||u⃗|| = √(x² + y² + z²)</p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple classique</h3>
+            <p><strong>Énoncé :</strong> Soit A(1, 2, 3) et B(4, -1, 5).</p>
+            <p><strong>1.</strong> Calculer les coordonnées de AB⃗</p>
+            <p><strong>Solution :</strong> AB⃗(4-1, -1-2, 5-3) = <strong>AB⃗(3, -3, 2)</strong></p>
+            
+            <p style="margin-top: 15px;"><strong>2.</strong> Calculer la distance AB</p>
+            <p><strong>Solution :</strong> AB = √(3² + (-3)² + 2²) = √(9 + 9 + 4) = √22 ≈ <strong>4,69</strong></p>
+            
+            <p style="margin-top: 15px;"><strong>3.</strong> Calculer les coordonnées du milieu I</p>
+            <p><strong>Solution :</strong> I((1+4)/2, (2-1)/2, (3+5)/2) = <strong>I(2.5, 0.5, 4)</strong></p>
+        </div>
+        
+        <h2>III. Vecteurs dans l'Espace</h2>
+        
+        <div class="definition">
+            <h3>Colinéarité</h3>
+            <p>Deux vecteurs u⃗(x, y, z) et v⃗(x', y', z') sont <strong>colinéaires</strong> s'il existe un réel k tel que :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;"><strong>v⃗ = k·u⃗</strong></p>
+            <p>C'est-à-dire : x' = kx, y' = ky, z' = kz</p>
+        </div>
+        
+        <div class="definition">
+            <h3>Coplanarité</h3>
+            <p>Trois vecteurs u⃗, v⃗, w⃗ sont <strong>coplanaires</strong> s'il existe deux réels a et b tels que :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;"><strong>w⃗ = a·u⃗ + b·v⃗</strong></p>
+            <p>Autrement dit : w⃗ est une combinaison linéaire de u⃗ et v⃗</p>
+        </div>
+        
+        <h2>IV. Produit Scalaire dans l'Espace</h2>
+        
+        <div class="definition">
+            <h3>Définition</h3>
+            <p>Le <strong>produit scalaire</strong> de deux vecteurs u⃗(x, y, z) et v⃗(x', y', z') est :</p>
+            <p style="text-align: center; font-size: 1.3em; margin: 15px 0; background: #f0f4ff; padding: 15px; border-radius: 5px;">
+                <strong>u⃗ · v⃗ = xx' + yy' + zz'</strong>
+            </p>
+        </div>
+        
+        <div class="formule">
+            <h3>Propriétés du produit scalaire</h3>
+            <p><strong>1. Lien avec la norme :</strong> u⃗ · u⃗ = ||u⃗||²</p>
+            <p><strong>2. Formule avec l'angle :</strong> u⃗ · v⃗ = ||u⃗|| · ||v⃗|| · cos(θ)</p>
+            <p><strong>3. Orthogonalité :</strong> u⃗ ⊥ v⃗ ⟺ u⃗ · v⃗ = 0</p>
+            <p><strong>4. Symétrie :</strong> u⃗ · v⃗ = v⃗ · u⃗</p>
+            <p><strong>5. Bilinéarité :</strong> (au⃗ + bv⃗) · w⃗ = a(u⃗ · w⃗) + b(v⃗ · w⃗)</p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Calculer un angle</h3>
+            <p><strong>Énoncé :</strong> Soit u⃗(1, 2, 2) et v⃗(2, -1, 2). Calculer l'angle entre u⃗ et v⃗.</p>
+            <p><strong>Solution :</strong></p>
+            <p>• u⃗ · v⃗ = 1×2 + 2×(-1) + 2×2 = 2 - 2 + 4 = <strong>4</strong></p>
+            <p>• ||u⃗|| = √(1² + 2² + 2²) = √9 = <strong>3</strong></p>
+            <p>• ||v⃗|| = √(2² + (-1)² + 2²) = √9 = <strong>3</strong></p>
+            <p>• cos(θ) = (u⃗ · v⃗) / (||u⃗|| · ||v⃗||) = 4 / (3×3) = 4/9</p>
+            <p>• θ = arccos(4/9) ≈ <strong>63,6°</strong></p>
+        </div>
+        
+        <h2>V. Droites dans l'Espace</h2>
+        
+        <div class="definition">
+            <h3>Représentation paramétrique d'une droite</h3>
+            <p>Une droite passant par A(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>) et de vecteur directeur u⃗(a, b, c) a pour représentation paramétrique :</p>
+            <div style="background: #fff9e6; padding: 15px; margin: 15px 0; border-radius: 5px; text-align: center; font-size: 1.2em;">
+                <p>x = x<sub>0</sub> + at</p>
+                <p>y = y<sub>0</sub> + bt</p>
+                <p>z = z<sub>0</sub> + ct</p>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">où t ∈ ℝ</p>
+            </div>
+        </div>
+        
+        <div class="important">
+            <h3>Positions relatives de deux droites</h3>
+            <p>Deux droites dans l'espace peuvent être :</p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li><strong>Sécantes :</strong> elles se coupent en un point</li>
+                <li><strong>Parallèles strictes :</strong> vecteurs directeurs colinéaires, pas de point commun</li>
+                <li><strong>Confondues :</strong> vecteurs directeurs colinéaires, un point commun</li>
+                <li><strong>Non coplanaires :</strong> ni parallèles, ni sécantes (cas spécifique à l'espace 3D)</li>
+            </ul>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Intersection de droites</h3>
+            <p><strong>Énoncé :</strong> Les droites d et d' sont-elles sécantes ?</p>
+            <p>d : x = 1 + t, y = 2 - t, z = 3t</p>
+            <p>d' : x = 3 + 2s, y = 1 + s, z = -1 + 3s</p>
+            <p><strong>Solution :</strong></p>
+            <p>On cherche t et s tels que les coordonnées soient égales :</p>
+            <p>• 1 + t = 3 + 2s ⟹ t - 2s = 2</p>
+            <p>• 2 - t = 1 + s ⟹ -t - s = -1 ⟹ t + s = 1</p>
+            <p>En résolvant : t = 4/3, s = -1/3</p>
+            <p>Vérification avec z : 3×(4/3) = 4 et -1 + 3×(-1/3) = -2 ⟹ 4 ≠ -2</p>
+            <p style="color: #f44336; font-weight: bold;">✗ Les droites ne sont pas sécantes (non coplanaires)</p>
+        </div>
+        
+        <h2>VI. Plans dans l'Espace</h2>
+        
+        <div class="definition">
+            <h3>Équation cartésienne d'un plan</h3>
+            <p>Un plan de vecteur normal n⃗(a, b, c) a pour équation cartésienne :</p>
+            <p style="text-align: center; font-size: 1.4em; margin: 15px 0; background: #f0f4ff; padding: 20px; border-radius: 5px;">
+                <strong>ax + by + cz + d = 0</strong>
+            </p>
+            <p>où (a, b, c) sont les coordonnées du vecteur normal au plan.</p>
+        </div>
+        
+        <div class="method-box">
+            <h3>Méthode : Déterminer l'équation d'un plan</h3>
+            <p><strong>Donnée :</strong> Plan passant par A et de vecteurs directeurs u⃗ et v⃗</p>
+            <p><strong>Méthode 1 - Représentation paramétrique :</strong></p>
+            <p style="margin-left: 20px;">x = x<sub>A</sub> + su₁ + tv₁</p>
+            <p style="margin-left: 20px;">y = y<sub>A</sub> + su₂ + tv₂</p>
+            <p style="margin-left: 20px;">z = z<sub>A</sub> + su₃ + tv₃</p>
+            
+            <p style="margin-top: 15px;"><strong>Méthode 2 - Équation cartésienne :</strong></p>
+            <p>1. Trouver un vecteur normal n⃗ orthogonal à u⃗ et v⃗</p>
+            <p>2. Utiliser ax + by + cz + d = 0</p>
+            <p>3. Remplacer les coordonnées de A pour trouver d</p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Équation d'un plan</h3>
+            <p><strong>Énoncé :</strong> Déterminer l'équation du plan passant par A(1, 0, 2) et de vecteur normal n⃗(2, -1, 3).</p>
+            <p><strong>Solution :</strong></p>
+            <p>• Équation générale : 2x - y + 3z + d = 0</p>
+            <p>• A appartient au plan, donc : 2×1 - 0 + 3×2 + d = 0</p>
+            <p>• 2 + 6 + d = 0 ⟹ d = -8</p>
+            <p style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin-top: 10px; text-align: center; font-size: 1.2em;">
+                <strong>Équation : 2x - y + 3z - 8 = 0</strong>
+            </p>
+        </div>
+        
+        <div class="important">
+            <h3>Positions relatives : Plan et Droite</h3>
+            <table class="tableau">
+                <tr>
+                    <th>Situation</th>
+                    <th>Condition</th>
+                    <th>Intersection</th>
+                </tr>
+                <tr>
+                    <td>Droite incluse dans le plan</td>
+                    <td>u⃗ ⊥ n⃗ et A ∈ P</td>
+                    <td>La droite entière</td>
+                </tr>
+                <tr>
+                    <td>Droite parallèle au plan</td>
+                    <td>u⃗ ⊥ n⃗ et A ∉ P</td>
+                    <td>Aucun point</td>
+                </tr>
+                <tr>
+                    <td>Droite sécante au plan</td>
+                    <td>u⃗ non orthogonal à n⃗</td>
+                    <td>Un point unique</td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>VII. Distances</h2>
+        
+        <div class="formule">
+            <h3>Distance d'un point à un plan</h3>
+            <p>La distance du point M₀(x₀, y₀, z₀) au plan P : ax + by + cz + d = 0 est :</p>
+            <p style="text-align: center; font-size: 1.3em; margin: 15px 0; background: #fff9e6; padding: 20px; border-radius: 5px;">
+                <strong>d(M₀, P) = |ax₀ + by₀ + cz₀ + d| / √(a² + b² + c²)</strong>
+            </p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Distance point-plan</h3>
+            <p><strong>Énoncé :</strong> Calculer la distance du point A(1, 2, -1) au plan P : 2x - y + 2z - 3 = 0</p>
+            <p><strong>Solution :</strong></p>
+            <p>• On a : a = 2, b = -1, c = 2, d = -3</p>
+            <p>• Numérateur : |2×1 + (-1)×2 + 2×(-1) - 3| = |2 - 2 - 2 - 3| = |-5| = 5</p>
+            <p>• Dénominateur : √(2² + (-1)² + 2²) = √(4 + 1 + 4) = √9 = 3</p>
+            <p>• Distance : d(A, P) = 5/3 ≈ <strong>1,67</strong></p>
+        </div>
+        
+        <div class="formule">
+            <h3>Distance d'un point à une droite</h3>
+            <p>La distance du point M au droite d passant par A et de vecteur directeur u⃗ est :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 15px 0;">
+                <strong>d(M, d) = ||AM⃗ ∧ u⃗|| / ||u⃗||</strong>
+            </p>
+            <p>Ou en utilisant la projection : d(M, d) = MH où H est le projeté orthogonal de M sur d</p>
+        </div>
+        
+        <h2>VIII. Sphères</h2>
+        
+        <div class="definition">
+            <h3>Équation d'une sphère</h3>
+            <p>La sphère de centre Ω(a, b, c) et de rayon R a pour équation :</p>
+            <p style="text-align: center; font-size: 1.3em; margin: 15px 0; background: #f0f4ff; padding: 20px; border-radius: 5px;">
+                <strong>(x - a)² + (y - b)² + (z - c)² = R²</strong>
+            </p>
+            <p>Ou sous forme développée :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;">
+                <strong>x² + y² + z² - 2ax - 2by - 2cz + (a² + b² + c² - R²) = 0</strong>
+            </p>
+        </div>
+        
+        <div class="visualization-box">
+            <h3 style="color: #667eea;">🌐 Intersection sphère-plan</h3>
+            <p>L'intersection d'une sphère et d'un plan peut être :</p>
+            <ul style="margin-left: 30px; margin-top: 15px;">
+                <li><strong>L'ensemble vide</strong> si d(Ω, P) > R (pas d'intersection)</li>
+                <li><strong>Un point</strong> si d(Ω, P) = R (plan tangent)</li>
+                <li><strong>Un cercle</strong> si d(Ω, P) < R (plan sécant)</li>
+            </ul>
+            <p style="margin-top: 15px;">Le rayon r du cercle d'intersection est : <strong>r = √(R² - d²)</strong></p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exemple : Intersection sphère-plan</h3>
+            <p><strong>Énoncé :</strong> La sphère S : x² + y² + z² = 25 et le plan P : 2x + y - 2z = 3 se coupent-ils ?</p>
+            <p><strong>Solution :</strong></p>
+            <p>• Centre de S : Ω(0, 0, 0), Rayon R = 5</p>
+            <p>• Distance Ω au plan P : d = |2×0 + 1×0 - 2×0 - 3| / √(4 + 1 + 4) = 3/3 = 1</p>
+            <p>• Comme d = 1 < R = 5, le plan coupe la sphère selon un cercle</p>
+            <p>• Rayon du cercle : r = √(25 - 1) = √24 = 2√6 ≈ <strong>4,90</strong></p>
+        </div>
+        
+        <h2>IX. Méthodes de Résolution</h2>
+        
+        <div class="method-box">
+            <h3>Méthode 1 : Montrer que 4 points sont coplanaires</h3>
+            <p><strong>Plusieurs approches :</strong></p>
+            <p><strong>Approche 1 :</strong> Montrer que les vecteurs AB⃗, AC⃗, AD⃗ sont coplanaires</p>
+            <p style="margin-left: 20px;">⟹ Vérifier qu'il existe λ, μ tels que AD⃗ = λAB⃗ + μAC⃗</p>
+            
+            <p style="margin-top: 15px;"><strong>Approche 2 :</strong> Déterminer l'équation du plan passant par A, B, C puis vérifier si D appartient à ce plan</p>
+            
+            <p style="margin-top: 15px;"><strong>Approche 3 :</strong> Calculer le déterminant de AB⃗, AC⃗, AD⃗ et vérifier s'il est nul</p>
+        </div>
+        
+        <div class="method-box">
+            <h3>Méthode 2 : Trouver l'intersection droite-plan</h3>
+            <p><strong>Étapes :</strong></p>
+            <p>1. Écrire la représentation paramétrique de la droite : M(t)</p>
+            <p>2. Remplacer x, y, z dans l'équation du plan</p>
+            <p>3. Résoudre l'équation en t</p>
+            <p>4. Si une solution existe, remplacer dans M(t) pour trouver le point d'intersection</p>
+            <p>5. Si aucune solution : droite parallèle au plan</p>
+            <p>6. Si équation toujours vraie : droite incluse dans le plan</p>
+        </div>
+        
+        <div class="method-box">
+            <h3>Méthode 3 : Montrer que deux plans sont parallèles</h3>
+            <p><strong>Condition nécessaire et suffisante :</strong></p>
+            <p>Deux plans P₁ : a₁x + b₁y + c₁z + d₁ = 0 et P₂ : a₂x + b₂y + c₂z + d₂ = 0 sont parallèles si et seulement si leurs vecteurs normaux sont colinéaires :</p>
+            <p style="text-align: center; margin: 10px 0;">n⃗₁(a₁, b₁, c₁) et n⃗₂(a₂, b₂, c₂) colinéaires</p>
+            <p>Si de plus d₁ ≠ kd₂ : plans <strong>strictement parallèles</strong></p>
+            <p>Si d₁ = kd₂ : plans <strong>confondus</strong></p>
+        </div>
+        
+        <h2>X. Exercices Types</h2>
+        
+        <div class="exemple">
+            <h3>Exercice type 1 : Géométrie complète</h3>
+            <p><strong>Énoncé :</strong> On considère les points A(1, 0, 0), B(0, 1, 0), C(0, 0, 1) et D(1, 1, 1).</p>
+            <p><strong>1.</strong> Montrer que ABCD est un tétraèdre (les 4 points ne sont pas coplanaires)</p>
+            <p><strong>Solution :</strong></p>
+            <p>• AB⃗(-1, 1, 0), AC⃗(-1, 0, 1), AD⃗(0, 1, 1)</p>
+            <p>• Cherchons si AD⃗ = λAB⃗ + μAC⃗</p>
+            <p>• 0 = -λ - μ, 1 = λ, 1 = μ</p>
+            <p>• De la 2e et 3e équation : λ = 1, μ = 1</p>
+            <p>• Vérification dans la 1re : 0 = -1 - 1 = -2 ✗</p>
+            <p style="color: #4caf50; font-weight: bold;">✓ Les points ne sont pas coplanaires</p>
+            
+            <p style="margin-top: 15px;"><strong>2.</strong> Déterminer l'équation du plan (ABC)</p>
+            <p><strong>Solution :</strong></p>
+            <p>• Cherchons n⃗ orthogonal à AB⃗ et AC⃗</p>
+            <p>• n⃗ · AB⃗ = 0 : -a + b = 0 ⟹ b = a</p>
+            <p>• n⃗ · AC⃗ = 0 : -a + c = 0 ⟹ c = a</p>
+            <p>• Prenons a = 1, donc n⃗(1, 1, 1)</p>
+            <p>• Équation : x + y + z + d = 0</p>
+            <p>• A(1, 0, 0) ∈ P : 1 + 0 + 0 + d = 0 ⟹ d = -1</p>
+            <p style="background: #e8f5e9; padding: 10px; border-radius: 5px; text-align: center; margin-top: 10px;">
+                <strong>Équation : x + y + z - 1 = 0</strong>
+            </p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exercice type 2 : Orthogonalité</h3>
+            <p><strong>Énoncé :</strong> Déterminer la valeur de m pour que les droites d et d' soient orthogonales :</p>
+            <p>d : x = 2t, y = 1 + t, z = -1 + 3t</p>
+            <p>d' : x = 1 + s, y = ms, z = 2 - s</p>
+            <p><strong>Solution :</strong></p>
+            <p>• Vecteur directeur de d : u⃗(2, 1, 3)</p>
+            <p>• Vecteur directeur de d' : v⃗(1, m, -1)</p>
+            <p>• Les droites sont orthogonales si u⃗ · v⃗ = 0</p>
+            <p>• 2×1 + 1×m + 3×(-1) = 0</p>
+            <p>• 2 + m - 3 = 0</p>
+            <p>• <strong>m = 1</strong></p>
+        </div>
+        
+        <div class="exemple">
+            <h3>Exercice type 3 : Section plane</h3>
+            <p><strong>Énoncé :</strong> Un cube ABCDEFGH de côté 1 est placé dans un repère orthonormé avec A à l'origine.</p>
+            <p>A(0,0,0), B(1,0,0), C(1,1,0), D(0,1,0), E(0,0,1), F(1,0,1), G(1,1,1), H(0,1,1)</p>
+            <p>Déterminer la nature de la section du cube par le plan P : x + y + z = 1,5</p>
+            <p><strong>Solution :</strong></p>
+            <p>On cherche quels sommets et arêtes sont coupés par le plan :</p>
+            <p>• Vérification des sommets : aucun ne vérifie x + y + z = 1,5</p>
+            <p>• Le plan coupe les arêtes en leurs milieux</p>
+            <p>• Points d'intersection : I milieu de [CG], J milieu de [FG], K milieu de [EH], L milieu de [DH]</p>
+            <p>• Ces 4 points forment un carré de côté √2/2</p>
+        </div>
+        
+        <h2>XI. Produit Vectoriel (Hors programme mais utile)</h2>
+        
+        <div class="definition">
+            <h3>Produit vectoriel</h3>
+            <p>Le produit vectoriel de u⃗(x, y, z) et v⃗(x', y', z') est le vecteur w⃗ = u⃗ ∧ v⃗ défini par :</p>
+            <p style="text-align: center; font-size: 1.2em; background: #f0f4ff; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                <strong>w⃗(yz' - zy', zx' - xz', xy' - yx')</strong>
+            </p>
+            <p><strong>Propriété importante :</strong> w⃗ est orthogonal à u⃗ et à v⃗</p>
+            <p><strong>Utilité :</strong> Trouver un vecteur normal à un plan défini par deux vecteurs directeurs</p>
+        </div>
+        
+        <div class="important">
+            <h3>⚠️ Erreurs fréquentes à éviter</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>❌ Confondre vecteur directeur et vecteur normal</li>
+                <li>❌ Oublier le paramètre t dans une représentation paramétrique</li>
+                <li>❌ Oublier la valeur absolue dans la formule de distance point-plan</li>
+                <li>❌ Ne pas vérifier toutes les équations lors d'une intersection droite-droite</li>
+                <li>❌ Confondre parallèle et orthogonal : u⃗ // v⃗ ⟺ colinéaires, u⃗ ⊥ v⃗ ⟺ u⃗·v⃗ = 0</li>
+            </ul>
+        </div>
+        
+        <div class="must-know" style="margin-top: 40px;">
+            <h4>📚 Formulaire complet à maîtriser</h4>
+            <ul>
+                <li><strong>Distance AB :</strong> √[(x<sub>B</sub>-x<sub>A</sub>)² + (y<sub>B</sub>-y<sub>A</sub>)² + (z<sub>B</sub>-z<sub>A</sub>)²]</li>
+                <li><strong>Produit scalaire :</strong> u⃗·v⃗ = xx' + yy' + zz' = ||u⃗||·||v⃗||·cos(θ)</li>
+                <li><strong>Orthogonalité :</strong> u⃗ ⊥ v⃗ ⟺ u⃗·v⃗ = 0</li>
+                <li><strong>Colinéarité :</strong> v⃗ = k·u⃗ ⟺ x'/x = y'/y = z'/z</li>
+                <li><strong>Équation de plan :</strong> ax + by + cz + d = 0 avec n⃗(a,b,c) normal</li>
+                <li><strong>Droite paramétrique :</strong> x = x₀ + at, y = y₀ + bt, z = z₀ + ct</li>
+                <li><strong>Distance point-plan :</strong> d = |ax₀ + by₀ + cz₀ + d| / √(a² + b² + c²)</li>
+                <li><strong>Sphère :</strong> (x-a)² + (y-b)² + (z-c)² = R²</li>
+            </ul>
+        </div>
+        
+        <div class="visualization-box" style="margin-top: 30px;">
+            <h3 style="color: #667eea; text-align: center;">🎯 Récapitulatif des configurations spatiales</h3>
+            <div class="comparison-grid">
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #764ba2; text-align: center;">Droite / Droite</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Sécantes (1 point)</li>
+                        <li>✓ Parallèles strictes</li>
+                        <li>✓ Confondues</li>
+                        <li>✓ Non coplanaires</li>
+                    </ul>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #764ba2; text-align: center;">Droite / Plan</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Sécante (1 point)</li>
+                        <li>✓ Parallèle stricte</li>
+                        <li>✓ Incluse</li>
+                    </ul>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #764ba2; text-align: center;">Plan / Plan</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Sécants (droite)</li>
+                        <li>✓ Parallèles stricts</li>
+                        <li>✓ Confondus</li>
+                    </ul>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #764ba2; text-align: center;">Sphère / Plan</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Vide (d > R)</li>
+                        <li>✓ Point (d = R)</li>
+                        <li>✓ Cercle (d < R)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #667eea; color: white; padding: 20px; margin-top: 40px; border-radius: 10px; text-align: center;">
+            <h3 style="margin-bottom: 15px;">💡 Conseil final</h3>
+            <p style="font-size: 1.1em; line-height: 1.8;">
+                La géométrie dans l'espace demande une bonne <strong>visualisation</strong> et une maîtrise du <strong>calcul vectoriel</strong>. 
+                Entraînez-vous à faire des schémas, même sommaires, pour comprendre les configurations spatiales. 
+                N'hésitez pas à utiliser des objets du quotidien (boîtes, livres) pour visualiser les situations en 3D !
+            </p>
+        </div>
+    </div>
+</body>
+</html>
