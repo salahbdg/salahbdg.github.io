@@ -344,7 +344,7 @@
 <header>
     <h1>The Power of Parallel</h1>
     <div class="subtitle">An Interactive Intro to GPU Programming with CUDA</div>
-    <div class="meta">Group: [Student Names] • Date: Dec 4, 2025</div>
+    <div class="meta">Group: BOUDGUIGUE Salaheddine and ILLAYK Mostada • Date: Dec 4, 2025</div>
 </header>
 
 <div class="container">
@@ -457,34 +457,43 @@
         <p>This simple kernel multiplies every element in an array by a constant factor. This is an ideal parallel task because each thread only needs to know its index and the factor—no thread needs to talk to any other.</p>
 
         <h3>The Kernel Code (GPU side)</h3>
-        <pre><code class="c-comment">// The code that runs in parallel on the GPU's thousands of cores.</span
+        <pre><code>
+<span class="c-comment">// The code that runs in parallel on the GPU's thousands of cores.</span>
 <span class="cuda-keyword">__global__</span> <span class="c-keyword">void</span> <span class="c-func">ArrayScaler</span>(<span class="c-keyword">float</span> *data, <span class="c-keyword">int</span> numElements, <span class="c-keyword">float</span> factor) {
     
     <span class="c-comment">// 1. The Global Index Calculation</span>
     <span class="c-type">int</span> i = blockDim.x * blockIdx.x + threadIdx.x;
 
     <span class="c-comment">// 2. Check boundary condition (Prevents array overflow)</span>
-    <span class="c-keyword">if</span> (i < numElements) {
+    <span class="c-keyword">if</span> (i &lt; numElements) {
         <span class="c-comment">// 3. The Core Parallel Work</span>
         data[i] = data[i] * factor;
     }
-}</code></pre>
+}
+
+/*
+To compile and run:
+  nvcc scaler.cu -o scaler
+  ./scaler
+*/
+</code>
+</pre>
 
         <h3>CUDA Keyword Glossary</h3>
         <ul>
-            <li><span class="inline-code cuda-keyword">__global__</span>: A **function type qualifier**. This function runs on the **Device (GPU)** but is called from the **Host (CPU)**. This is a **Kernel**.</li>
-            <li><span class="inline-code cuda-keyword">__device__</span>: (Not used here, but key) A function that runs on the **Device (GPU)** and is only callable by other functions on the Device.</li>
-            <li><span class="inline-code special-launch">&lt;&lt;&lt;blocks, threads&gt;&gt;&gt;</span>: The **Execution Configuration**. This is how the Host tells the Device *how* to organize the workers when launching the Kernel.
+            <li><span class="inline-code cuda-keyword">__global__</span>: A <strong>function type qualifier</strong>. This function runs on the <strong>Device (GPU)</strong> but is called from the <strong>Host (CPU)</strong>. This is a <strong>Kernel</strong>.</li>
+            <li><span class="inline-code cuda-keyword">__device__</span>: (Not used here, but key) A function that runs on the <strong>Device (GPU)</strong> and is only callable by other functions on the Device.</li>
+            <li><span class="inline-code special-launch">&lt;&lt;&lt;blocks, threads&gt;&gt;&gt;</span>: The <strong>Execution Configuration</strong>. This is how the Host tells the Device <em>how</em> to organize the workers when launching the Kernel.
                 <ul>
-                    <li>The first argument is the number of **Blocks** in the Grid.</li>
-                    <li>The second argument is the number of **Threads** in each Block.</li>
+                    <li>The first argument is the number of <strong>Blocks</strong> in the Grid.</li>
+                    <li>The second argument is the number of <strong>Threads</strong> in each Block.</li>
                 </ul>
             </li>
         </ul>
 
         <div class="analogy-box" style="border-left-color: #2ecc71; background-color: #e6f7e8;">
             <span class="analogy-title" style="color: #2ecc71;">The Kernel's Core Idea</span>
-            <p>Every single thread runs the exact same code, but because each one calculates a unique index (`i`), they all end up working on a different, independent piece of data. This is **Single Instruction, Multiple Data (SIMD)**.</p>
+            <p>Every single thread runs the exact same code, but because each one calculates a unique index (`i`), they all end up working on a different, independent piece of data. This is <strong>Single Instruction, Multiple Data (SIMD)</strong>.</p>
         </div>
 
         <!-- INTERACTIVE DEMO 4 (Execution Simulator) -->
