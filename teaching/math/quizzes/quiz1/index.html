@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Défi Quiz Maths & Logique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: clamp(24px, 5vw, 36px);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .easy {
+            background: #10b981;
+            color: white;
+        }
+
+        .medium {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .hard {
+            background: #ef4444;
+            color: white;
+        }
+
+        .question {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .answer-section {
+            margin-top: 15px;
+            padding: 20px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .answer-section.show {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .answer-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .answer-content {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .reveal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .reveal-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .reveal-btn:active {
+            transform: scale(0.95);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-card {
+                padding: 20px;
+            }
+
+            .question {
+                font-size: 16px;
+            }
+
+            .reveal-btn {
+                width: 100%;
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Défi Quiz Maths & Logique</h1>
+
+        <!-- Quiz 1 - Facile -->
+        <div class="quiz-card">
+            <span class="difficulty easy">Facile</span>
+            <div class="question">
+                Une batte et une balle coûtent 1,10 € au total. La batte coûte 1,00 € de plus que la balle. Combien coûte la balle ?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(1)">Voir la réponse</button>
+            <div class="answer-section" id="answer1">
+                <div class="answer-title">Réponse : 0,05 €</div>
+                <div class="answer-content">
+                    Beaucoup de gens disent instinctivement 0,10 €, mais c'est incorrect ! Si la balle coûte 0,10 € et que la batte coûte 1,00 € de plus, la batte coûterait 1,10 €, ce qui ferait un total de 1,20 €.<br><br>
+                    Résolvons correctement : Si la balle coûte x, alors la batte coûte x + 1,00 €. Donc : x + (x + 1,00 €) = 1,10 €, ce qui signifie 2x = 0,10 €, donc x = 0,05 €. La balle coûte 0,05 € et la batte coûte 1,05 €, soit un total de 1,10 €.
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz 2 - Facile -->
+        <div class="quiz-card">
+            <span class="difficulty easy">Facile</span>
+            <div class="question">
+                Si vous participez à une course et que vous dépassez la personne en deuxième position, à quelle place êtes-vous maintenant ?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(2)">Voir la réponse</button>
+            <div class="answer-section" id="answer2">
+                <div class="answer-title">Réponse : Deuxième place</div>
+                <div class="answer-content">
+                    C'est un piège logique ! Beaucoup de gens disent "première place", mais réfléchissez bien. Si vous dépassez la personne en deuxième position, vous prenez sa position - la deuxième place. La personne qui était en première place est toujours devant vous. Vous ne devenez premier que si vous dépassez le coureur en première place !
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz 3 - Moyen -->
+        <div class="quiz-card">
+            <span class="difficulty medium">Moyen</span>
+            <div class="question">
+                Un nénuphar double de taille chaque jour. S'il faut 48 jours pour que le nénuphar recouvre l'étang entier, combien de jours faut-il pour recouvrir la moitié de l'étang ?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(3)">Voir la réponse</button>
+            <div class="answer-section" id="answer3">
+                <div class="answer-title">Réponse : 47 jours</div>
+                <div class="answer-content">
+                    La réponse intuitive mais incorrecte est 24 jours (la moitié de 48). Cependant, puisque le nénuphar double de taille chaque jour, s'il recouvre l'étang entier le jour 48, il doit avoir recouvert exactement la moitié de l'étang le jour 47. Au jour 47, il est à moitié recouvert, puis il double au jour 48 pour être complètement recouvert. Cela illustre la croissance exponentielle !
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz 4 - Moyen -->
+        <div class="quiz-card">
+            <span class="difficulty medium">Moyen</span>
+            <div class="question">
+                Vous avez 12 pièces, et l'une d'entre elles est fausse (soit plus lourde, soit plus légère que les autres). Vous avez une balance à plateaux et vous pouvez l'utiliser seulement 3 fois. Pouvez-vous identifier quelle pièce est fausse et si elle est plus lourde ou plus légère ?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(4)">Voir la réponse</button>
+            <div class="answer-section" id="answer4">
+                <div class="answer-title">Réponse : Oui, c'est possible !</div>
+                <div class="answer-content">
+                    <strong>Première pesée :</strong> Divisez les pièces en groupes de 4. Pesez le groupe A contre le groupe B. Si équilibré, la fausse est dans le groupe C. Si déséquilibré, la fausse est dans le groupe le plus lourd ou le plus léger.<br><br>
+                    <strong>Deuxième pesée :</strong> Prenez le groupe suspect de 4 pièces. Pesez 3 d'entre elles contre 3 pièces bonnes connues. Cela vous indique si la fausse est plus lourde ou plus légère, et réduit la recherche à 3 ou 1 pièces.<br><br>
+                    <strong>Troisième pesée :</strong> Pesez 2 des pièces suspectes restantes l'une contre l'autre. Si équilibré, la troisième est fausse. Si déséquilibré, vous savez laquelle est fausse et si elle est plus lourde ou plus légère en fonction de la deuxième pesée.<br><br>
+                    Ce puzzle classique nécessite une réflexion logique minutieuse à chaque étape !
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz 5 - Difficile -->
+        <div class="quiz-card">
+            <span class="difficulty hard">Difficile</span>
+            <div class="question">
+                Trois logiciens entrent dans un bar. Le barman demande : "Est-ce que vous voulez tous un verre ?" Le premier logicien dit : "Je ne sais pas." Le deuxième logicien dit : "Je ne sais pas." Que dit le troisième logicien ?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(5)">Voir la réponse</button>
+            <div class="answer-section" id="answer5">
+                <div class="answer-title">Réponse : "Oui"</div>
+                <div class="answer-content">
+                    Cela nécessite de comprendre comment les logiciens pensent ! Chaque logicien connaît son propre désir mais pas celui des autres.<br><br>
+                    Quand le premier logicien dit "Je ne sais pas", il dit en fait : "Je veux un verre, mais je ne sais pas si TOUS nous en voulons un." S'il n'en voulait pas, il aurait répondu "Non" immédiatement.<br><br>
+                    Le deuxième logicien entend cela et dit aussi "Je ne sais pas". Par la même logique, le deuxième logicien veut aussi un verre (sinon il aurait dit "Non"), mais ne sait toujours pas pour la troisième personne.<br><br>
+                    Le troisième logicien, ayant entendu les deux réponses précédentes, sait que les deux premiers veulent des verres. Puisque le troisième logicien veut aussi un verre (sinon il dirait "Non"), il peut répondre avec confiance "Oui" - tous les trois veulent des verres !
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(quizNum) {
+            const answer = document.getElementById('answer' + quizNum);
+            const btn = answer.previousElementSibling;
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                btn.textContent = 'Voir la réponse';
+            } else {
+                answer.classList.add('show');
+                btn.textContent = 'Masquer la réponse';
+            }
+        }
+    </script>
+</body>
+</html>
