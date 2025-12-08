@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limites et Continuité - Terminale</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .definition {
+            background: #f0f4ff;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .formule {
+            background: #fff9e6;
+            padding: 15px;
+            border-left: 5px solid #ffa500;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .exemple {
+            background: #e8f5e9;
+            padding: 20px;
+            border-left: 5px solid #4caf50;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .important {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 5px solid #f44336;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .tableau {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .tableau th, .tableau td {
+            border: 2px solid #667eea;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .tableau th {
+            background: #667eea;
+            color: white;
+        }
+
+        .tableau tr:nth-child(even) {
+            background: #f0f4ff;
+        }
+
+        .method-box {
+            background: #fff3e0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 5px solid #ff9800;
+        }
+
+        .visualization-box {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px dashed #667eea;
+        }
+
+        .must-know {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .must-know h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .must-know ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .must-know li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.05em;
+        }
+
+        .must-know li:before {
+            content: "✓";
+            position: absolute;
+            left: 5px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        canvas {
+            max-height: 400px;
+        }
+
+        .simple-explanation {
+            background: #e3f2fd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #2196f3;
+        }
+
+        .simple-explanation h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>∞ Limites et Continuité - Terminale</h1>
+
+        <div class="must-know">
+            <h4>🎯 L'essentiel à retenir absolument</h4>
+            <ul>
+                <li><strong>Limite en a :</strong> vers quelle valeur tend f(x) quand x se rapproche de a</li>
+                <li><strong>Limite à l'infini :</strong> comportement de f(x) quand x devient très grand</li>
+                <li><strong>Formes indéterminées :</strong> ∞-∞, 0/0, ∞/∞, 0×∞ → il faut lever l'indétermination !</li>
+                <li><strong>Continuité :</strong> la fonction n'a pas de "saut" en a : lim f(x) = f(a)</li>
+                <li><strong>Asymptote verticale :</strong> x = a si lim<sub>x→a</sub> f(x) = ±∞</li>
+                <li><strong>Asymptote horizontale :</strong> y = L si lim<sub>x→±∞</sub> f(x) = L</li>
+            </ul>
+        </div>
+
+        <h2>I. Qu'est-ce qu'une Limite ? 🤔</h2>
+
+        <div class="simple-explanation">
+            <h4>💡 Explication simple</h4>
+            <p>Imaginez que vous marchez vers un mur. La <strong>limite</strong>, c'est le mur que vous vous apprêtez à toucher (même si vous ne le touchez jamais vraiment).</p>
+            <p style="margin-top: 10px;">Pour une fonction, la limite répond à la question : <em>"Vers quelle valeur se dirige f(x) quand x se rapproche d'un certain nombre ?"</em></p>
+        </div>
+
+        <div class="definition">
+            <h3>Limite en un point a</h3>
+            <p>On dit que <strong>f(x) a pour limite L quand x tend vers a</strong> si f(x) se rapproche autant qu'on veut de L lorsque x se rapproche de a.</p>
+            <p style="text-align: center; font-size: 1.3em; margin: 15px 0;">
+                <strong>lim<sub>x→a</sub> f(x) = L</strong>
+            </p>
+        </div>
+
+        <div class="chart-container">
+            <h3 style="text-align: center; color: #667eea;">Visualisation : Limite en un point</h3>
+            <canvas id="limitPointChart"></canvas>
+            <p style="text-align: center; color: #666; margin-top: 10px;">
+                Quand x se rapproche de 2, f(x) se rapproche de 4
+            </p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple simple</h3>
+            <p><strong>Calculer lim<sub>x→3</sub> (2x + 1)</strong></p>
+            <p><strong>Solution :</strong> On remplace x par 3 :</p>
+            <p>lim<sub>x→3</sub> (2x + 1) = 2×3 + 1 = <strong>7</strong></p>
+            <p style="color: #4caf50; margin-top: 10px;">✓ Pour les fonctions polynomiales, on peut simplement remplacer !</p>
+        </div>
+
+        <h2>II. Limites à l'Infini</h2>
+
+        <div class="simple-explanation">
+            <h4>💡 Explication simple</h4>
+            <p>Limite à l'infini = "Que se passe-t-il quand x devient TRÈS TRÈS grand ?"</p>
+            <p>Est-ce que f(x) explose vers +∞, plonge vers -∞, ou se stabilise vers une valeur ?</p>
+        </div>
+
+        <div class="formule">
+            <h3>Limites de référence à connaître par cœur</h3>
+            <table class="tableau">
+                <tr>
+                    <th>Fonction</th>
+                    <th>lim<sub>x→+∞</sub></th>
+                    <th>lim<sub>x→-∞</sub></th>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>+∞</td>
+                    <td>-∞</td>
+                </tr>
+                <tr>
+                    <td>x²</td>
+                    <td>+∞</td>
+                    <td>+∞</td>
+                </tr>
+                <tr>
+                    <td>x³</td>
+                    <td>+∞</td>
+                    <td>-∞</td>
+                </tr>
+                <tr>
+                    <td>1/x</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>√x</td>
+                    <td>+∞</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>e<sup>x</sup></td>
+                    <td>+∞</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>ln(x)</td>
+                    <td>+∞</td>
+                    <td>-</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <h3 style="text-align: center; color: #667eea;">Croissances comparées</h3>
+            <canvas id="croissanceChart"></canvas>
+            <p style="text-align: center; color: #666; margin-top: 10px;">
+                e<sup>x</sup> explose beaucoup plus vite que x² qui explose plus vite que x !
+            </p>
+        </div>
+
+        <div class="important">
+            <h3>🔑 Règle d'or pour les limites à l'infini</h3>
+            <p>Pour une fraction rationnelle, la limite dépend du <strong>terme de plus haut degré</strong> :</p>
+            <p style="margin: 15px 0; text-align: center; font-size: 1.2em;">
+                lim<sub>x→∞</sub> (ax<sup>n</sup> + ...)/(bx<sup>m</sup> + ...) = lim<sub>x→∞</sub> ax<sup>n</sup>/bx<sup>m</sup>
+            </p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple : Fraction rationnelle</h3>
+            <p><strong>Calculer lim<sub>x→+∞</sub> (3x² + 5x - 1)/(2x² - 7)</strong></p>
+            <p><strong>Solution simplifiée :</strong></p>
+            <p>1. On regarde les termes dominants : 3x²/2x²</p>
+            <p>2. lim<sub>x→+∞</sub> 3x²/2x² = 3/2</p>
+            <p style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px; text-align: center;">
+                <strong>Réponse : 3/2</strong>
+            </p>
+            <p style="color: #666; margin-top: 10px;">💡 Astuce : Diviser numérateur et dénominateur par x²</p>
+        </div>
+
+        <h2>III. Formes Indéterminées (FI)</h2>
+
+        <div class="simple-explanation">
+            <h4>💡 Explication simple</h4>
+            <p>Une forme indéterminée, c'est quand on ne peut pas conclure directement.</p>
+            <p>C'est comme si deux forces s'opposent et on ne sait pas qui va gagner !</p>
+        </div>
+
+        <div class="important">
+            <h3>⚠️ Les 4 formes indéterminées principales</h3>
+            <table class="tableau">
+                <tr>
+                    <th>Forme</th>
+                    <th>Situation</th>
+                    <th>Méthode</th>
+                </tr>
+                <tr>
+                    <td><strong>∞ - ∞</strong></td>
+                    <td>Différence de deux infinis</td>
+                    <td>Factoriser ou multiplier par la quantité conjuguée</td>
+                </tr>
+                <tr>
+                    <td><strong>0/0</strong></td>
+                    <td>Division de deux quantités tendant vers 0</td>
+                    <td>Factoriser et simplifier</td>
+                </tr>
+                <tr>
+                    <td><strong>∞/∞</strong></td>
+                    <td>Division de deux infinis</td>
+                    <td>Diviser par le terme dominant</td>
+                </tr>
+                <tr>
+                    <td><strong>0 × ∞</strong></td>
+                    <td>Produit d'un infiniment petit et un infini</td>
+                    <td>Transformer en fraction</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="method-box">
+            <h3>Méthode 1 : Lever la FI "∞/∞"</h3>
+            <p><strong>Étape 1 :</strong> Identifier le terme de plus haut degré au numérateur et dénominateur</p>
+            <p><strong>Étape 2 :</strong> Diviser numérateur et dénominateur par ce terme</p>
+            <p><strong>Étape 3 :</strong> Calculer la limite (les termes en 1/x → 0)</p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple : FI "∞/∞"</h3>
+            <p><strong>Calculer lim<sub>x→+∞</sub> (5x³ + 2x)/(3x³ - x²)</strong></p>
+            <p><strong>Étape 1 :</strong> On a "∞/∞" (forme indéterminée)</p>
+            <p><strong>Étape 2 :</strong> Diviser par x³ (plus haut degré)</p>
+            <p>= lim<sub>x→+∞</sub> (5 + 2/x²)/(3 - 1/x)</p>
+            <p><strong>Étape 3 :</strong> 2/x² → 0 et 1/x → 0</p>
+            <p>= (5 + 0)/(3 - 0) = <strong>5/3</strong></p>
+        </div>
+
+        <div class="method-box">
+            <h3>Méthode 2 : Lever la FI "0/0"</h3>
+            <p><strong>Technique :</strong> Factoriser le numérateur et le dénominateur, puis simplifier</p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple : FI "0/0"</h3>
+            <p><strong>Calculer lim<sub>x→2</sub> (x² - 4)/(x - 2)</strong></p>
+            <p><strong>Étape 1 :</strong> Si on remplace : (4-4)/(2-2) = 0/0 (FI)</p>
+            <p><strong>Étape 2 :</strong> Factoriser : x² - 4 = (x-2)(x+2)</p>
+            <p>= lim<sub>x→2</sub> [(x-2)(x+2)]/(x-2)</p>
+            <p><strong>Étape 3 :</strong> Simplifier par (x-2)</p>
+            <p>= lim<sub>x→2</sub> (x+2) = 2+2 = <strong>4</strong></p>
+        </div>
+
+        <div class="method-box">
+            <h3>Méthode 3 : Lever la FI "∞ - ∞"</h3>
+            <p><strong>Technique :</strong> Multiplier par la quantité conjuguée ou factoriser</p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple : FI "∞ - ∞"</h3>
+            <p><strong>Calculer lim<sub>x→+∞</sub> (√(x² + x) - x)</strong></p>
+            <p><strong>Étape 1 :</strong> On a "∞ - ∞" (FI)</p>
+            <p><strong>Étape 2 :</strong> Multiplier par la quantité conjuguée</p>
+            <p>= lim<sub>x→+∞</sub> [(√(x² + x) - x)(√(x² + x) + x)]/(√(x² + x) + x)</p>
+            <p>= lim<sub>x→+∞</sub> (x² + x - x²)/(√(x² + x) + x)</p>
+            <p>= lim<sub>x→+∞</sub> x/(√(x² + x) + x)</p>
+            <p><strong>Étape 3 :</strong> Diviser par x</p>
+            <p>= lim<sub>x→+∞</sub> 1/(√(1 + 1/x) + 1) = 1/(1 + 1) = <strong>1/2</strong></p>
+        </div>
+
+        <h2>IV. Continuité</h2>
+
+        <div class="simple-explanation">
+            <h4>💡 Explication simple</h4>
+            <p>Une fonction est <strong>continue</strong> si on peut tracer sa courbe <strong>sans lever le crayon</strong> !</p>
+            <p>Pas de trou, pas de saut, pas de cassure.</p>
+        </div>
+
+        <div class="definition">
+            <h3>Définition mathématique</h3>
+            <p>f est <strong>continue en a</strong> si :</p>
+            <div style="background: #f0f4ff; padding: 20px; margin: 15px 0; border-radius: 5px; text-align: center;">
+                <p style="font-size: 1.3em;"><strong>lim<sub>x→a</sub> f(x) = f(a)</strong></p>
+                <p style="margin-top: 10px; color: #666;">La limite existe, f(a) existe, et elles sont égales</p>
+            </div>
+        </div>
+
+        <div class="comparison-grid">
+            <div class="chart-container">
+                <h4 style="text-align: center; color: #4caf50;">✓ Fonction Continue</h4>
+                <canvas id="continuousChart"></canvas>
+                <p style="text-align: center; color: #666;">Pas de saut, pas de trou</p>
+            </div>
+            <div class="chart-container">
+                <h4 style="text-align: center; color: #f44336;">✗ Fonction Discontinue</h4>
+                <canvas id="discontinuousChart"></canvas>
+                <p style="text-align: center; color: #666;">Saut visible en x = 2</p>
+            </div>
+        </div>
+
+        <div class="important">
+            <h3>Fonctions continues sur leur ensemble de définition</h3>
+            <ul style="margin-left: 30px; margin-top: 10px; font-weight: normal;">
+                <li>✓ Polynômes : x², 3x + 5, x³ - 2x...</li>
+                <li>✓ Fonctions rationnelles (sauf aux points où le dénominateur s'annule)</li>
+                <li>✓ √x (sur [0, +∞[)</li>
+                <li>✓ e<sup>x</sup>, ln(x) (sur ]0, +∞[)</li>
+                <li>✓ sin(x), cos(x)</li>
+            </ul>
+        </div>
+
+        <div class="definition">
+            <h3>Théorème des Valeurs Intermédiaires (TVI)</h3>
+            <p>Si f est <strong>continue</strong> sur [a, b] et si k est compris entre f(a) et f(b), alors il existe au moins un c ∈ [a, b] tel que :</p>
+            <p style="text-align: center; font-size: 1.3em; margin: 15px 0; background: #e8f5e9; padding: 15px; border-radius: 5px;">
+                <strong>f(c) = k</strong>
+            </p>
+            <p style="color: #666;">💡 En français : la courbe coupe forcément la droite y = k</p>
+        </div>
+
+        <div class="exemple">
+            <h3>Application du TVI : Montrer l'existence d'une solution</h3>
+            <p><strong>Montrer que l'équation x³ - 2x + 1 = 0 admet une solution sur [-2, 0]</strong></p>
+            <p><strong>Solution :</strong></p>
+            <p>1. Soit f(x) = x³ - 2x + 1</p>
+            <p>2. f est un polynôme donc <strong>continue</strong> sur ℝ</p>
+            <p>3. f(-2) = (-2)³ - 2(-2) + 1 = -8 + 4 + 1 = <strong>-3</strong></p>
+            <p>4. f(0) = 0 - 0 + 1 = <strong>1</strong></p>
+            <p>5. Comme f(-2) < 0 < f(0) et f continue, d'après le TVI, il existe c ∈ [-2, 0] tel que f(c) = 0</p>
+            <p style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                ✓ L'équation admet bien une solution dans [-2, 0]
+            </p>
+        </div>
+
+        <h2>V. Asymptotes</h2>
+
+        <div class="simple-explanation">
+            <h4>💡 Explication simple</h4>
+            <p>Une <strong>asymptote</strong>, c'est une ligne droite que la courbe "frôle" en s'en approchant de plus en plus, mais sans jamais la toucher.</p>
+            <p>Comme un avion qui vole au ras du sol sans jamais atterrir !</p>
+        </div>
+
+        <h3>A. Asymptote Verticale</h3>
+
+        <div class="definition">
+            <p>La droite <strong>x = a</strong> est asymptote verticale à la courbe de f si :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;">
+                lim<sub>x→a</sub> f(x) = +∞ ou lim<sub>x→a</sub> f(x) = -∞
+            </p>
+        </div>
+
+        <div class="chart-container">
+            <h3 style="text-align: center; color: #667eea;">Asymptote Verticale x = 2</h3>
+            <canvas id="asymptoteVertChart"></canvas>
+            <p style="text-align: center; color: #666; margin-top: 10px;">
+                La courbe "explose" vers ±∞ quand x se rapproche de 2
+            </p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple</h3>
+            <p><strong>f(x) = 1/(x - 3)</strong></p>
+            <p>lim<sub>x→3</sub> 1/(x-3) = ±∞</p>
+            <p style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                <strong>→ Asymptote verticale : x = 3</strong>
+            </p>
+        </div>
+
+        <h3>B. Asymptote Horizontale</h3>
+
+        <div class="definition">
+            <p>La droite <strong>y = L</strong> est asymptote horizontale si :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;">
+                lim<sub>x→+∞</sub> f(x) = L ou lim<sub>x→-∞</sub> f(x) = L
+            </p>
+        </div>
+
+        <div class="chart-container">
+            <h3 style="text-align: center; color: #667eea;">Asymptote Horizontale y = 2</h3>
+            <canvas id="asymptoteHorChart"></canvas>
+            <p style="text-align: center; color: #666; margin-top: 10px;">
+                La courbe se rapproche de y = 2 quand x → +∞
+            </p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple</h3>
+            <p><strong>f(x) = (2x + 1)/(x + 3)</strong></p>
+            <p>lim<sub>x→+∞</sub> (2x + 1)/(x + 3) = lim<sub>x→+∞</sub> 2x/x = 2</p>
+            <p style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                <strong>→ Asymptote horizontale : y = 2</strong>
+            </p>
+        </div>
+
+        <h3>C. Asymptote Oblique</h3>
+
+        <div class="definition">
+            <p>La droite <strong>y = ax + b</strong> est asymptote oblique si :</p>
+            <p style="text-align: center; font-size: 1.2em; margin: 10px 0;">
+                lim<sub>x→±∞</sub> [f(x) - (ax + b)] = 0
+            </p>
+        </div>
+
+        <div class="method-box">
+            <h3>Méthode pour trouver une asymptote oblique</h3>
+            <p><strong>Étape 1 :</strong> Calculer a = lim<sub>x→±∞</sub> f(x)/x</p>
+            <p><strong>Étape 2 :</strong> Calculer b = lim<sub>x→±∞</sub> [f(x) - ax]</p>
+            <p><strong>Étape 3 :</strong> L'asymptote est y = ax + b</p>
+        </div>
+
+        <div class="exemple">
+            <h3>Exemple</h3>
+            <p><strong>f(x) = (x² + x + 1)/x = x + 1 + 1/x</strong></p>
+            <p><strong>Étape 1 :</strong> a = lim<sub>x→+∞</sub> [(x² + x + 1)/x]/x = lim<sub>x→+∞</sub> (x² + x + 1)/x² = 1</p>
+            <p><strong>Étape 2 :</strong> b = lim<sub>x→+∞</sub> [(x² + x + 1)/x - x]</p>
+            <p>= lim<sub>x→+∞</sub> [x + 1 + 1/x - x] = lim<sub>x→+∞</sub> (1 + 1/x) = <strong>1</strong></p>
+            <p style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                <strong>→ Asymptote oblique : y = x + 1</strong>
+            </p>
+        </div>
+
+        <div class="chart-container">
+            <h3 style="text-align: center; color: #667eea;">Asymptote Oblique y = x + 1</h3>
+            <canvas id="asymptoteObliqueChart"></canvas>
+            <p style="text-align: center; color: #666; margin-top: 10px;">
+                La courbe se rapproche de la droite y = x + 1 quand x → ±∞
+            </p>
+        </div>
+
+        <h2>VI. Exercices Récapitulatifs</h2>
+
+        <div class="exemple">
+            <h3>Exercice 1 : Calculer des limites</h3>
+            <p>Calculer les limites suivantes :</p>
+            <p>a) lim<sub>x→5</sub> (x² - 25)/(x - 5)</p>
+            <p>b) lim<sub>x→+∞</sub> (3x³ - 2x)/(x³ + 5)</p>
+            <p>c) lim<sub>x→+∞</sub> (√(x² + 1) - x)</p>
+
+            <div style="background: white; padding: 15px; margin-top: 15px; border-radius: 5px;">
+                <p><strong>Solutions :</strong></p>
+                <p><strong>a)</strong> FI "0/0" → Factoriser : (x-5)(x+5)/(x-5) = x+5 → Réponse : <strong>10</strong></p>
+                <p><strong>b)</strong> FI "∞/∞" → Diviser par x³ : (3 - 2/x²)/(1 + 5/x³) → Réponse : <strong>3</strong></p>
+                <p><strong>c)</strong> FI "∞ - ∞" → Quantité conjuguée → Réponse : <strong>0</strong></p>
+            </div>
+        </div>
+
+        <div class="must-know">
+            <h4>✅ Check-list finale : Tu dois savoir</h4>
+            <ul>
+                <li>Calculer une limite simple par substitution</li>
+                <li>Identifier les 4 formes indéterminées</li>
+                <li>Lever une FI "0/0" par factorisation</li>
+                <li>Lever une FI "∞/∞" en divisant par le terme dominant</li>
+                <li>Lever une FI "∞ - ∞" avec la quantité conjuguée</li>
+                <li>Vérifier si une fonction est continue en un point</li>
+                <li>Appliquer le TVI pour montrer l'existence d'une solution</li>
+                <li>Déterminer les asymptotes verticales et horizontales</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; margin-top: 40px;">
+            <h2 style="color: white; border: none; margin: 0;">Bon courage pour tes révisions ! 📚</h2>
+            <p style="margin-top: 15px; font-size: 1.1em;">Avec de la pratique, les limites deviennent faciles !</p>
+        </div>
+    </div>
+
+    <script>
+        Chart.defaults.font.size = 14;
+        Chart.defaults.color = '#333';
+
+        const ctx1 = document.getElementById('limitPointChart').getContext('2d');
+        const limitPointData = {
+            labels: [],
+            datasets: [{
+                label: 'f(x) = x²',
+                data: [],
+                borderColor: '#667eea',
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.4
+            }, {
+                label: 'Point limite',
+                data: [{x: 2, y: 4}],
+                borderColor: '#f44336',
+                backgroundColor: '#f44336',
+                pointRadius: 8,
+                pointStyle: 'circle',
+                showLine: false
+            }]
+        };
+
+        for (let x = 0; x <= 4; x += 0.1) {
+            limitPointData.labels.push(x.toFixed(1));
+            limitPointData.datasets[0].data.push(x * x);
+        }
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: limitPointData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'x',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        ticks: {
+                            callback: function(value, index) {
+                                return index % 10 === 0 ? this.getLabelForValue(value) : '';
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'f(x)',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('croissanceChart').getContext('2d');
+        const croissanceData = {
+            labels: [],
+            datasets: [{
+                label: 'x',
+                data: [],
+                borderColor: '#4caf50',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.4
+            }, {
+                label: 'x²',
+                data: [],
+                borderColor: '#2196f3',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.4
+            }, {
+                label: 'eˣ',
+                data: [],
+                borderColor: '#f44336',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.4
+            }]
+        };
+
+        for (let x = 0; x <= 5; x += 0.1) {
+            croissanceData.labels.push(x.toFixed(1));
+            croissanceData.datasets[0].data.push(x);
+            croissanceData.datasets[1].data.push(x * x);
+            croissanceData.datasets[2].data.push(Math.exp(x));
+        }
+
+        new Chart(ctx2, {
+            type: 'line',
+            data: croissanceData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'x',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        ticks: {
+                            callback: function(value, index) {
+                                return index % 10 === 0 ? this.getLabelForValue(value) : '';
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'y',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        max: 150
+                    }
+                }
+            }
+        });
+
+        const ctx3 = document.getElementById('continuousChart').getContext('2d');
+        const continuousData = {
+            labels: [],
+            datasets: [{
+                label: 'f(x) = x²',
+                data: [],
+                borderColor: '#4caf50',
+                backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.4
+            }]
+        };
+
+        for (let x = -2; x <= 4; x += 0.1) {
+            continuousData.labels.push(x.toFixed(1));
+            continuousData.datasets[0].data.push(x * x);
+        }
+
+        new Chart(ctx3, {
+            type: 'line',
+            data: continuousData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'x',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        ticks: {
+                            callback: function(value, index) {
+                                return index % 10 === 0 ? this.getLabelForValue(value) : '';
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'f(x)',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctx4 = document.getElementById('discontinuousChart').getContext('2d');
+        const discontinuousData = {
+            datasets: [{
+                label: 'f(x) avant x=2',
+                data: [],
+                borderColor: '#f44336',
+                backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.4
+            }, {
+                label: 'f(x) après x=2',
+                data: [],
+                borderColor: '#f44336',
+                backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.4
+            }, {
+                label: 'Discontinuité',
+                data: [{x: 2, y: 4}, {x: 2, y: 1}],
+                borderColor: '#ff9800',
+                backgroundColor: '#ff9800',
+                pointRadius: 6,
+                pointStyle: 'circle',
+                showLine: false
+            }]
+        };
+
+        for (let x = -2; x <= 2; x += 0.1) {
+            discontinuousData.datasets[0].data.push({x: x, y: x * x});
+        }
+
+        for (let x = 2; x <= 4; x += 0.1) {
+            discontinuousData.datasets[1].data.push({x: x, y: x * x - 3});
+        }
+
+        new Chart(ctx4, {
+            type: 'line',
+            data: discontinuousData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: {
+                            display: true,
+                            text: 'x',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'f(x)',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctx5 = document.getElementById('asymptoteVertChart').getContext('2d');
+        const asymptoteVertData = {
+            datasets: [{
+                label: 'f(x) = 1/(x-2)',
+                data: [],
+                borderColor: '#667eea',
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.1,
+                segment: {
+                    borderDash: ctx => {
+                        const xVal = ctx.p0.parsed.x;
+                        return (xVal > 1.8 && xVal < 2.2) ? [5, 5] : [];
+                    }
+                }
+            }, {
+                label: 'Asymptote x=2',
+                data: [{x: 2, y: -10}, {x: 2, y: 10}],
+                borderColor: '#f44336',
+                borderWidth: 2,
+                borderDash: [10, 5],
+                pointRadius: 0
+            }]
+        };
+
+        for (let x = -1; x <= 5; x += 0.1) {
+            if (Math.abs(x - 2) > 0.1) {
+                const y = 1 / (x - 2);
+                if (y > -10 && y < 10) {
+                    asymptoteVertData.datasets[0].data.push({x: x, y: y});
+                }
+            }
+        }
+
+        new Chart(ctx5, {
+            type: 'line',
+            data: asymptoteVertData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: {
+                            display: true,
+                            text: 'x',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        min: -1,
+                        max: 5
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'f(x)',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        min: -10,
+                        max: 10
+                    }
+                }
+            }
+        });
+
+        const ctx6 = document.getElementById('asymptoteHorChart').getContext('2d');
+        const asymptoteHorData = {
+            datasets: [{
+                label: 'f(x) = (2x+1)/(x+3)',
+                data: [],
+                borderColor: '#667eea',
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.4
+            }, {
+                label: 'Asymptote y=2',
+                data: [{x: -10, y: 2}, {x: 20, y: 2}],
+                borderColor: '#f44336',
+                borderWidth: 2,
+                borderDash: [10, 5],
+                pointRadius: 0
+            }]
+        };
+
+        for (let x = -10; x <= 20; x += 0.2) {
+            if (Math.abs(x + 3) > 0.2) {
+                asymptoteHorData.datasets[0].data.push({
+                    x: x,
+                    y: (2 * x + 1) / (x + 3)
+                });
+            }
+        }
+
+        new Chart(ctx6, {
+            type: 'line',
+            data: asymptoteHorData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: {
+                            display: true,
+                            text: 'x',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'f(x)',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        min: -2,
+                        max: 6
+                    }
+                }
+            }
+        });
+
+        const ctx7 = document.getElementById('asymptoteObliqueChart').getContext('2d');
+        const asymptoteObliqueData = {
+            datasets: [{
+                label: 'f(x) = x + 1 + 1/x',
+                data: [],
+                borderColor: '#667eea',
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.4
+            }, {
+                label: 'Asymptote y = x + 1',
+                data: [],
+                borderColor: '#f44336',
+                borderWidth: 2,
+                borderDash: [10, 5],
+                pointRadius: 0
+            }]
+        };
+
+        for (let x = -10; x <= 10; x += 0.2) {
+            if (Math.abs(x) > 0.2) {
+                asymptoteObliqueData.datasets[0].data.push({
+                    x: x,
+                    y: x + 1 + 1/x
+                });
+            }
+            asymptoteObliqueData.datasets[1].data.push({
+                x: x,
+                y: x + 1
+            });
+        }
+
+        new Chart(ctx7, {
+            type: 'line',
+            data: asymptoteObliqueData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: {
+                            display: true,
+                            text: 'x',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        min: -10,
+                        max: 10
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'f(x)',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        min: -15,
+                        max: 15
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
